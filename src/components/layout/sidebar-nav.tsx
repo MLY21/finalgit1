@@ -1,0 +1,373 @@
+"use client";
+
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { Home, Sparkles, ChevronDown, ChevronRight, Plus, List, BarChart3, TrendingUp } from "lucide-react";
+
+import { NavLink } from "@/components/layout/nav-link";
+import { useNavigation } from "@/hooks/use-navigation";
+import { useTranslations } from "@/providers/locale-provider";
+import { cn } from "@/lib/utils";
+
+interface SidebarNavProps {
+  onNavigate?: () => void;
+  iconOnly?: boolean;
+  onToggle?: () => void;
+}
+
+export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNavProps) {
+  const t = useTranslations();
+  const navItems = useNavigation();
+  const pathname = usePathname();
+  
+  const isClientsRoute = pathname.startsWith("/dashboard/clients");
+  const [isClientsOpen, setIsClientsOpen] = useState(isClientsRoute);
+
+  const isCampaignsRoute = pathname.startsWith("/dashboard/campaigns");
+  const [isCampaignsOpen, setIsCampaignsOpen] = useState(isCampaignsRoute);
+
+  const isAnalyticsRoute = pathname.startsWith("/dashboard/analytics");
+  const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(isAnalyticsRoute);
+
+  useEffect(() => {
+    if (isClientsRoute) {
+      setIsClientsOpen(true);
+    }
+  }, [pathname, isClientsRoute]);
+
+  useEffect(() => {
+    if (isCampaignsRoute) {
+      setIsCampaignsOpen(true);
+    }
+  }, [pathname, isCampaignsRoute]);
+
+  useEffect(() => {
+    if (isAnalyticsRoute) {
+      setIsAnalyticsOpen(true);
+    }
+  }, [pathname, isAnalyticsRoute]);
+
+  return (
+    <div
+      className={cn(
+        "flex h-full flex-col",
+        iconOnly && "items-center"
+      )}
+    >
+      <div
+        className={cn(
+          "flex w-full border-b border-zinc-200 dark:border-zinc-800",
+          iconOnly ? "justify-center px-2 py-4" : "items-center gap-3 px-5 py-5"
+        )}
+      >
+        <Link
+          href="/dashboard"
+          onClick={onNavigate}
+          title={iconOnly ? t("app.name") : undefined}
+          aria-label={t("app.name")}
+          className={cn(
+            "flex items-center rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600",
+            iconOnly ? "justify-center" : "min-w-0 flex-1 gap-3"
+          )}
+        >
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900">
+            <Home className="size-5" />
+          </div>
+          {!iconOnly ? (
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                {t("app.name")}
+              </p>
+              <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">
+                {t("app.tagline")}
+              </p>
+            </div>
+          ) : null}
+        </Link>
+      </div>
+
+      <nav
+        className={cn(
+          "flex flex-1 flex-col overflow-y-auto",
+          iconOnly ? "items-center gap-2 p-2" : "space-y-1 p-3"
+        )}
+      >
+        {navItems.map((item) => {
+          if (item.key === "clients") {
+            const isAllClientsActive = pathname === "/dashboard/clients";
+            const isNewClientActive = pathname === "/dashboard/clients/new";
+
+            return (
+              <div key={item.key} className="w-full space-y-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (iconOnly && onToggle) {
+                      onToggle();
+                      setIsClientsOpen(true);
+                    } else {
+                      setIsClientsOpen(!isClientsOpen);
+                    }
+                  }}
+                  className={cn(
+                    "flex w-full items-center rounded-xl border border-transparent text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600",
+                    iconOnly ? "size-11 justify-center" : "gap-3 px-3 py-2.5 justify-between",
+                    isClientsRoute
+                      ? "border-zinc-200 bg-white text-zinc-900 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                      : "text-zinc-600 hover:border-zinc-200 hover:bg-white hover:text-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-800 dark:hover:bg-zinc-900/60 dark:hover:text-zinc-100"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <item.icon
+                      className={cn(
+                        "shrink-0",
+                        iconOnly ? "size-5" : "size-4",
+                        isClientsRoute
+                          ? "text-zinc-900 dark:text-zinc-100"
+                          : "text-zinc-500 dark:text-zinc-500"
+                      )}
+                    />
+                    {!iconOnly && <span>{item.title}</span>}
+                  </div>
+                  {!iconOnly && (
+                    isClientsOpen ? (
+                      <ChevronDown className="size-4 text-zinc-400 dark:text-zinc-500" />
+                    ) : (
+                      <ChevronRight className="size-4 text-zinc-400 dark:text-zinc-500" />
+                    )
+                  )}
+                </button>
+
+                {!iconOnly && isClientsOpen && (
+                  <div className="pl-9 pr-1 space-y-1">
+                    <Link
+                      href="/dashboard/clients"
+                      onClick={onNavigate}
+                      className={cn(
+                        "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
+                        isAllClientsActive
+                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                      )}
+                    >
+                      <List className="size-3.5" />
+                      <span>All Clients</span>
+                    </Link>
+                    <Link
+                      href="/dashboard/clients/new"
+                      onClick={onNavigate}
+                      className={cn(
+                        "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
+                        isNewClientActive
+                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                      )}
+                    >
+                      <Plus className="size-3.5" />
+                      <span>Add Client</span>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          if (item.key === "campaigns") {
+            const isAllCampaignsActive = pathname === "/dashboard/campaigns";
+            const isImportCampaignsActive = pathname === "/dashboard/campaigns/import";
+
+            return (
+              <div key={item.key} className="w-full space-y-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (iconOnly && onToggle) {
+                      onToggle();
+                      setIsCampaignsOpen(true);
+                    } else {
+                      setIsCampaignsOpen(!isCampaignsOpen);
+                    }
+                  }}
+                  className={cn(
+                    "flex w-full items-center rounded-xl border border-transparent text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600",
+                    iconOnly ? "size-11 justify-center" : "gap-3 px-3 py-2.5 justify-between",
+                    isCampaignsRoute
+                      ? "border-zinc-200 bg-white text-zinc-900 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                      : "text-zinc-600 hover:border-zinc-200 hover:bg-white hover:text-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-800 dark:hover:bg-zinc-900/60 dark:hover:text-zinc-100"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <item.icon
+                      className={cn(
+                        "shrink-0",
+                        iconOnly ? "size-5" : "size-4",
+                        isCampaignsRoute
+                          ? "text-zinc-900 dark:text-zinc-100"
+                          : "text-zinc-500 dark:text-zinc-500"
+                      )}
+                    />
+                    {!iconOnly && <span>{item.title}</span>}
+                  </div>
+                  {!iconOnly && (
+                    isCampaignsOpen ? (
+                      <ChevronDown className="size-4 text-zinc-400 dark:text-zinc-500" />
+                    ) : (
+                      <ChevronRight className="size-4 text-zinc-400 dark:text-zinc-500" />
+                    )
+                  )}
+                </button>
+
+                {!iconOnly && isCampaignsOpen && (
+                  <div className="pl-9 pr-1 space-y-1">
+                    <Link
+                      href="/dashboard/campaigns"
+                      onClick={onNavigate}
+                      className={cn(
+                        "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
+                        isAllCampaignsActive
+                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                      )}
+                    >
+                      <List className="size-3.5" />
+                      <span>All Campaigns</span>
+                    </Link>
+                    <Link
+                      href="/dashboard/campaigns/import"
+                      onClick={onNavigate}
+                      className={cn(
+                        "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
+                        isImportCampaignsActive
+                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                      )}
+                    >
+                      <Plus className="size-3.5" />
+                      <span>Import Campaigns</span>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          if (item.key === "analytics") {
+            const isOverviewActive = pathname === "/dashboard/analytics";
+            const isInsightsActive = pathname === "/dashboard/analytics/insights";
+
+            return (
+              <div key={item.key} className="w-full space-y-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (iconOnly && onToggle) {
+                      onToggle();
+                      setIsAnalyticsOpen(true);
+                    } else {
+                      setIsAnalyticsOpen(!isAnalyticsOpen);
+                    }
+                  }}
+                  className={cn(
+                    "flex w-full items-center rounded-xl border border-transparent text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600",
+                    iconOnly ? "size-11 justify-center" : "gap-3 px-3 py-2.5 justify-between",
+                    isAnalyticsRoute
+                      ? "border-zinc-200 bg-white text-zinc-900 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                      : "text-zinc-600 hover:border-zinc-200 hover:bg-white hover:text-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-800 dark:hover:bg-zinc-900/60 dark:hover:text-zinc-100"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <item.icon
+                      className={cn(
+                        "shrink-0",
+                        iconOnly ? "size-5" : "size-4",
+                        isAnalyticsRoute
+                          ? "text-zinc-900 dark:text-zinc-100"
+                          : "text-zinc-500 dark:text-zinc-500"
+                      )}
+                    />
+                    {!iconOnly && <span>{item.title}</span>}
+                  </div>
+                  {!iconOnly && (
+                    isAnalyticsOpen ? (
+                      <ChevronDown className="size-4 text-zinc-400 dark:text-zinc-500" />
+                    ) : (
+                      <ChevronRight className="size-4 text-zinc-400 dark:text-zinc-500" />
+                    )
+                  )}
+                </button>
+
+                {!iconOnly && isAnalyticsOpen && (
+                  <div className="pl-9 pr-1 space-y-1">
+                    <Link
+                      href="/dashboard/analytics"
+                      onClick={onNavigate}
+                      className={cn(
+                        "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
+                        isOverviewActive
+                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                      )}
+                    >
+                      <BarChart3 className="size-3.5" />
+                      <span>Overview</span>
+                    </Link>
+                    <Link
+                      href="/dashboard/analytics/insights"
+                      onClick={onNavigate}
+                      className={cn(
+                        "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
+                        isInsightsActive
+                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                      )}
+                    >
+                      <TrendingUp className="size-3.5" />
+                      <span>Campaign Insights</span>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          return (
+            <NavLink
+              key={item.href}
+              href={item.href}
+              title={item.title}
+              icon={item.icon}
+              onNavigate={onNavigate}
+              iconOnly={iconOnly}
+              exact={item.href === "/dashboard"}
+              onToggle={item.href === "/dashboard" ? onToggle : undefined}
+            />
+          );
+        })}
+      </nav>
+
+      {!iconOnly ? (
+        <div className="w-full border-t border-zinc-200 p-4 dark:border-zinc-800">
+          <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900/50">
+            <p className="text-xs font-medium text-zinc-900 dark:text-zinc-100">
+              {t("sidebar.proPlan")}
+            </p>
+            <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+              {t("sidebar.proPlanDescription")}
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="flex w-full justify-center border-t border-zinc-200 p-3 dark:border-zinc-800">
+          <div
+            title={t("sidebar.proPlan")}
+            className="flex size-10 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-50 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-300"
+          >
+            <Sparkles className="size-4" />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+

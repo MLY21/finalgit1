@@ -1,0 +1,17 @@
+@layer components {
+  .performance-bar {
+    @apply h-2 w-full appearance-none overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800;
+  }
+
+  .performance-bar::-webkit-progress-bar {
+    @apply rounded-full bg-zinc-100 dark:bg-zinc-800;
+  }
+
+  .performance-bar::-webkit-progress-value {
+    @apply rounded-full bg-zinc-900 dark:bg-zinc-100;
+  }
+
+  .performance-bar::-moz-progress-bar {
+    @apply rounded-full bg-zinc-900 dark:bg-zinc-100;
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "app": {
+    "name": "CampaignHub",
+    "description": "Digital Marketing Campaign Management System",
+    "tagline": "Campaign Management"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "clients": "Clients",
+    "campaigns": "Campaigns",
+    "analytics": "Analytics",
+    "finance": "Finance",
+    "profile": "Profile",
+    "settings": "Settings",
+    "userDashboard": "Dashboard",
+    "userCampaigns": "My Campaigns",
+    "userReports": "Reports",
+    "userProfile": "Profile"
+  },
+  "sidebar": {
+    "proPlan": "Pro Plan",
+    "proPlanDescription": "Manage campaigns across Meta, TikTok & Google.",
+    "expand": "Expand sidebar",
+    "collapse": "Collapse sidebar"
+  },
+  "navbar": {
+    "searchPlaceholder": "Search campaigns, clients...",
+    "openMenu": "Open menu",
+    "navigationMenu": "Navigation menu",
+    "notifications": "Notifications",
+    "changeLanguage": "Change language",
+    "toggleTheme": "Toggle theme",
+    "userMenu": "User menu",
+    "addCampaign": "Add Campaign"
+  },
+  "dashboard": {
+    "welcomeTitle": "Recent Campaign Activity",
+    "welcomeDescription": "",
+    "vsLastMonth": "vs last month"
+  },
+  "stats": {
+    "totalClients": "Total Clients",
+    "activeCampaigns": "Active Campaigns",
+    "totalLeads": "Total Leads",
+    "totalExpenses": "Total Expenses"
+  },
+  "charts": {
+    "campaignPerformance": {
+      "title": "Campaign Performance",
+      "description": "Impressions, clicks, and conversions over time",
+      "impressions": "Impressions",
+      "clicks": "Clicks",
+      "conversions": "Conversions"
+    },
+    "monthlyExpenses": {
+      "title": "Monthly Expenses",
+      "description": "Expenses from active campaigns",
+      "expenses": "Expenses"
+    }
+  },
+  "table": {
+    "recentCampaigns": "Recent Campaigns",
+    "recentCampaignsDescription": "Overview of your latest advertising campaigns",
+    "campaign": "Campaign",
+    "platform": "Platform",
+    "budget": "Budget",
+    "status": "Status",
+    "performance": "Performance",
+    "date": "Date"
+  },
+  "status": {
+    "active": "Active",
+    "paused": "Paused",
+    "completed": "Completed"
+  },
+  "platforms": {
+    "meta": "Meta Ads",
+    "tiktok": "TikTok Ads",
+    "google": "Google Ads"
+  },
+  "pages": {
+    "clients": {
+      "title": "Clients",
+      "description": "Manage your agency clients and accounts."
+    },
+    "campaigns": {
+      "title": "Campaigns",
+      "description": "Create and manage advertising campaigns."
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "Track performance metrics across platforms."
+    },
+    "finance": {
+      "title": "Finance",
+      "description": "Monitor budgets, expenses, and revenue."
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "Manage your personal and account information."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Configure your workspace preferences."
+    }
+  },
+  "common": {
+    "comingSoon": "Coming soon",
+    "loading": "Loading..."
+  },
+  "campaignNames": {
+    "summerBrandAwareness": "Summer Brand Awareness",
+    "productLaunchGenZ": "Product Launch — Gen Z",
+    "searchHighIntent": "Search — High Intent Keywords",
+    "retargetingCart": "Retargeting — Cart Abandoners",
+    "holidayPromo2025": "Holiday Promo 2025",
+    "influencerCollab": "Influencer Collab Boost"
+  }
+}
