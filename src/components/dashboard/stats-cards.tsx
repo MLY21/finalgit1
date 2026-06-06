@@ -21,6 +21,13 @@ const statIcons: Record<StatKey, LucideIcon> = {
   totalExpenses: Receipt,
 };
 
+const statAccents: Record<StatKey, "green" | "blue" | "purple" | "orange"> = {
+  totalClients: "purple",
+  activeCampaigns: "blue",
+  totalLeads: "green",
+  totalExpenses: "orange",
+};
+
 interface StatsCardsProps {
   stats: StatCardData[];
 }
@@ -47,6 +54,7 @@ export function StatsCards({ stats }: StatsCardsProps) {
             trend={stat.trend}
             icon={Icon}
             comparisonLabel={t("dashboard.vsLastMonth")}
+            accent={statAccents[stat.key]}
           />
         );
 

@@ -36,9 +36,27 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                // Remove dark class from HTML element
+                document.documentElement.classList.remove('dark');
+                // Set the theme to light in localStorage
+                localStorage.setItem('adcentral-theme', 'light');
+                // Clear old theme key
+                localStorage.removeItem('theme');
+              } catch (e) {
+                // Ignore errors
+              }
+            })();
+          `,
+        }}
+      />
       <body
         suppressHydrationWarning
-        className="min-h-full bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100"
+        className="min-h-full bg-background text-foreground dark:bg-zinc-950 dark:text-zinc-100"
       >
         <AppProviders>{children}</AppProviders>
       </body>

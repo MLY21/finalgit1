@@ -17,7 +17,7 @@ export function Sidebar({ className, isExpanded = false, onToggle }: SidebarProp
     <aside
       data-sidebar
       className={cn(
-        "fixed inset-y-0 start-0 z-40 hidden shrink-0 flex-col border-e border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 lg:flex transition-all duration-300",
+        "fixed inset-y-0 start-0 z-40 hidden shrink-0 flex-col border-e border-border bg-card lg:flex transition-all duration-300",
         isExpanded ? SIDEBAR_WIDTH_EXPANDED : SIDEBAR_WIDTH_COLLAPSED,
         className
       )}

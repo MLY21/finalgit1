@@ -14,7 +14,7 @@ export function DashboardCard({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900",
+        "rounded-2xl border border-border bg-card shadow-sm",
         hover &&
           "transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md",
         className

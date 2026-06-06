@@ -57,7 +57,7 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
     >
       <div
         className={cn(
-          "flex w-full border-b border-zinc-200 dark:border-zinc-800",
+          "flex w-full border-b border-border",
           iconOnly ? "justify-center px-2 py-4" : "items-center gap-3 px-5 py-5"
         )}
       >
@@ -71,15 +71,15 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
             iconOnly ? "justify-center" : "min-w-0 flex-1 gap-3"
           )}
         >
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Home className="size-5" />
           </div>
           {!iconOnly ? (
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+              <p className="truncate text-sm font-semibold text-foreground">
                 {t("app.name")}
               </p>
-              <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">
+              <p className="truncate text-xs text-muted-foreground">
                 {t("app.tagline")}
               </p>
             </div>
@@ -114,8 +114,8 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                     "flex w-full items-center rounded-xl border border-transparent text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600",
                     iconOnly ? "size-11 justify-center" : "gap-3 px-3 py-2.5 justify-between",
                     isClientsRoute
-                      ? "border-zinc-200 bg-white text-zinc-900 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
-                      : "text-zinc-600 hover:border-zinc-200 hover:bg-white hover:text-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-800 dark:hover:bg-zinc-900/60 dark:hover:text-zinc-100"
+                      ? "border-border bg-accent text-primary shadow-sm"
+                      : "text-muted-foreground hover:border-border hover:bg-accent hover:text-foreground"
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -124,17 +124,17 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                         "shrink-0",
                         iconOnly ? "size-5" : "size-4",
                         isClientsRoute
-                          ? "text-zinc-900 dark:text-zinc-100"
-                          : "text-zinc-500 dark:text-zinc-500"
+                          ? "text-primary"
+                          : "text-muted-foreground"
                       )}
                     />
                     {!iconOnly && <span>{item.title}</span>}
                   </div>
                   {!iconOnly && (
                     isClientsOpen ? (
-                      <ChevronDown className="size-4 text-zinc-400 dark:text-zinc-500" />
+                      <ChevronDown className="size-4 text-muted-foreground" />
                     ) : (
-                      <ChevronRight className="size-4 text-zinc-400 dark:text-zinc-500" />
+                      <ChevronRight className="size-4 text-muted-foreground" />
                     )
                   )}
                 </button>
@@ -147,8 +147,8 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                       className={cn(
                         "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
                         isAllClientsActive
-                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
-                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                          ? "bg-accent text-primary"
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
                       )}
                     >
                       <List className="size-3.5" />
@@ -160,8 +160,8 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                       className={cn(
                         "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
                         isNewClientActive
-                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
-                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                          ? "bg-accent text-primary"
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
                       )}
                     >
                       <Plus className="size-3.5" />
@@ -193,8 +193,8 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                     "flex w-full items-center rounded-xl border border-transparent text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600",
                     iconOnly ? "size-11 justify-center" : "gap-3 px-3 py-2.5 justify-between",
                     isCampaignsRoute
-                      ? "border-zinc-200 bg-white text-zinc-900 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
-                      : "text-zinc-600 hover:border-zinc-200 hover:bg-white hover:text-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-800 dark:hover:bg-zinc-900/60 dark:hover:text-zinc-100"
+                      ? "border-border bg-accent text-primary shadow-sm"
+                      : "text-muted-foreground hover:border-border hover:bg-accent hover:text-foreground"
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -203,17 +203,17 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                         "shrink-0",
                         iconOnly ? "size-5" : "size-4",
                         isCampaignsRoute
-                          ? "text-zinc-900 dark:text-zinc-100"
-                          : "text-zinc-500 dark:text-zinc-500"
+                          ? "text-primary"
+                          : "text-muted-foreground"
                       )}
                     />
                     {!iconOnly && <span>{item.title}</span>}
                   </div>
                   {!iconOnly && (
                     isCampaignsOpen ? (
-                      <ChevronDown className="size-4 text-zinc-400 dark:text-zinc-500" />
+                      <ChevronDown className="size-4 text-muted-foreground" />
                     ) : (
-                      <ChevronRight className="size-4 text-zinc-400 dark:text-zinc-500" />
+                      <ChevronRight className="size-4 text-muted-foreground" />
                     )
                   )}
                 </button>
@@ -226,8 +226,8 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                       className={cn(
                         "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
                         isAllCampaignsActive
-                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
-                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                          ? "bg-accent text-primary"
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
                       )}
                     >
                       <List className="size-3.5" />
@@ -239,8 +239,8 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                       className={cn(
                         "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
                         isImportCampaignsActive
-                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
-                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                          ? "bg-accent text-primary"
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
                       )}
                     >
                       <Plus className="size-3.5" />
@@ -272,8 +272,8 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                     "flex w-full items-center rounded-xl border border-transparent text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600",
                     iconOnly ? "size-11 justify-center" : "gap-3 px-3 py-2.5 justify-between",
                     isAnalyticsRoute
-                      ? "border-zinc-200 bg-white text-zinc-900 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
-                      : "text-zinc-600 hover:border-zinc-200 hover:bg-white hover:text-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-800 dark:hover:bg-zinc-900/60 dark:hover:text-zinc-100"
+                      ? "border-border bg-accent text-primary shadow-sm"
+                      : "text-muted-foreground hover:border-border hover:bg-accent hover:text-foreground"
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -282,17 +282,17 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                         "shrink-0",
                         iconOnly ? "size-5" : "size-4",
                         isAnalyticsRoute
-                          ? "text-zinc-900 dark:text-zinc-100"
-                          : "text-zinc-500 dark:text-zinc-500"
+                          ? "text-primary"
+                          : "text-muted-foreground"
                       )}
                     />
                     {!iconOnly && <span>{item.title}</span>}
                   </div>
                   {!iconOnly && (
                     isAnalyticsOpen ? (
-                      <ChevronDown className="size-4 text-zinc-400 dark:text-zinc-500" />
+                      <ChevronDown className="size-4 text-muted-foreground" />
                     ) : (
-                      <ChevronRight className="size-4 text-zinc-400 dark:text-zinc-500" />
+                      <ChevronRight className="size-4 text-muted-foreground" />
                     )
                   )}
                 </button>
@@ -305,8 +305,8 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                       className={cn(
                         "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
                         isOverviewActive
-                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
-                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                          ? "bg-accent text-primary"
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
                       )}
                     >
                       <BarChart3 className="size-3.5" />
@@ -318,8 +318,8 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
                       className={cn(
                         "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 outline-none",
                         isInsightsActive
-                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
-                          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/40 dark:hover:text-zinc-200"
+                          ? "bg-accent text-primary"
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
                       )}
                     >
                       <TrendingUp className="size-3.5" />
@@ -347,21 +347,21 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
       </nav>
 
       {!iconOnly ? (
-        <div className="w-full border-t border-zinc-200 p-4 dark:border-zinc-800">
-          <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900/50">
-            <p className="text-xs font-medium text-zinc-900 dark:text-zinc-100">
+        <div className="w-full border-t border-border p-4">
+          <div className="rounded-xl border border-border bg-secondary p-3">
+            <p className="text-xs font-medium text-foreground">
               {t("sidebar.proPlan")}
             </p>
-            <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="mt-1 text-xs text-muted-foreground">
               {t("sidebar.proPlanDescription")}
             </p>
           </div>
         </div>
       ) : (
-        <div className="flex w-full justify-center border-t border-zinc-200 p-3 dark:border-zinc-800">
+        <div className="flex w-full justify-center border-t border-border p-3">
           <div
             title={t("sidebar.proPlan")}
-            className="flex size-10 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-50 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-300"
+            className="flex size-10 items-center justify-center rounded-xl border border-border bg-secondary text-foreground"
           >
             <Sparkles className="size-4" />
           </div>

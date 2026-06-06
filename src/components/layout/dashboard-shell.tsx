@@ -39,7 +39,7 @@ export function DashboardShell({ children, title }: DashboardShellProps) {
   }, [sidebarExpanded]);
 
   return (
-    <div className="flex min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="flex min-h-screen bg-background dark:bg-zinc-950">
       <Sidebar
         isExpanded={sidebarExpanded}
         onToggle={() => setSidebarExpanded(!sidebarExpanded)}
@@ -49,7 +49,7 @@ export function DashboardShell({ children, title }: DashboardShellProps) {
         <SheetContent
           side={sheetSide}
           showCloseButton
-          className="w-72 max-w-[85vw] border-zinc-200 bg-white p-0 dark:border-zinc-800 dark:bg-zinc-900"
+          className="w-72 max-w-[85vw] border-border bg-card p-0 dark:border-zinc-800 dark:bg-zinc-900"
         >
           <SheetTitle className="sr-only">
             {t("navbar.navigationMenu")}

@@ -1,4 +1,4 @@
-export const APP_NAME = "CampaignHub";
+export const APP_NAME = "AdCentral";
 export const APP_DESCRIPTION =
   "Digital Marketing Campaign Management System";
 

@@ -22,7 +22,7 @@ export function ClientSidebar({
     <aside
       data-sidebar
       className={cn(
-        "fixed inset-y-0 start-0 z-40 hidden shrink-0 flex-col border-e border-zinc-200 bg-white transition-all duration-300 dark:border-zinc-800 dark:bg-zinc-900 lg:flex",
+        "fixed inset-y-0 start-0 z-40 hidden shrink-0 flex-col border-e border-border bg-card transition-all duration-300 lg:flex",
         isExpanded ? SIDEBAR_WIDTH_EXPANDED : SIDEBAR_WIDTH_COLLAPSED,
         className
       )}
