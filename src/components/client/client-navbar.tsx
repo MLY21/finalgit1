@@ -14,7 +14,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { clientInfo } from "@/data/client-dashboard";
 import { clientNavItems } from "@/lib/client-navigation";
 
 interface ClientNavbarProps {

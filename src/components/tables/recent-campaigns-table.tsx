@@ -71,7 +71,7 @@ export function RecentCampaignsTable({
               className="border-zinc-200 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-800/50"
             >
                 <TableCell className="ps-5 font-medium text-zinc-900 dark:text-zinc-100 sm:ps-6">
-                  {t(`campaignNames.${campaign.nameKey}`)}
+                  {campaign.name}
                 </TableCell>
                 <TableCell className="text-zinc-600 dark:text-zinc-400">
                   {t(platformKeys[campaign.platform])}

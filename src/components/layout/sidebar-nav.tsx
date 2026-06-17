@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Home, Sparkles, ChevronDown, ChevronRight, Plus, List, BarChart3, TrendingUp } from "lucide-react";
+import { Home, LogOut, ChevronDown, ChevronRight, Plus, List, BarChart3, TrendingUp } from "lucide-react";
 
 import { NavLink } from "@/components/layout/nav-link";
 import { useNavigation } from "@/hooks/use-navigation";
@@ -20,7 +20,7 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
   const t = useTranslations();
   const navItems = useNavigation();
   const pathname = usePathname();
-  
+
   const isClientsRoute = pathname.startsWith("/dashboard/clients");
   const [isClientsOpen, setIsClientsOpen] = useState(isClientsRoute);
 
@@ -29,6 +29,11 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
 
   const isAnalyticsRoute = pathname.startsWith("/dashboard/analytics");
   const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(isAnalyticsRoute);
+
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    window.location.href = "/login";
+  };
 
   useEffect(() => {
     if (isClientsRoute) {
@@ -348,23 +353,23 @@ export function SidebarNav({ onNavigate, iconOnly = false, onToggle }: SidebarNa
 
       {!iconOnly ? (
         <div className="w-full border-t border-border p-4">
-          <div className="rounded-xl border border-border bg-secondary p-3">
-            <p className="text-xs font-medium text-foreground">
-              {t("sidebar.proPlan")}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              {t("sidebar.proPlanDescription")}
-            </p>
-          </div>
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 rounded-xl border border-border bg-secondary px-3 py-2.5 text-sm font-medium text-foreground transition-all duration-200 hover:bg-accent hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600"
+          >
+            <LogOut className="size-4 shrink-0" />
+            <span>Logout</span>
+          </button>
         </div>
       ) : (
         <div className="flex w-full justify-center border-t border-border p-3">
-          <div
-            title={t("sidebar.proPlan")}
-            className="flex size-10 items-center justify-center rounded-xl border border-border bg-secondary text-foreground"
+          <button
+            onClick={handleLogout}
+            title="Logout"
+            className="flex size-10 items-center justify-center rounded-xl border border-border bg-secondary text-foreground transition-all duration-200 hover:bg-accent hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600"
           >
-            <Sparkles className="size-4" />
-          </div>
+            <LogOut className="size-4" />
+          </button>
         </div>
       )}
     </div>

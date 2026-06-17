@@ -17,10 +17,8 @@ import {
 import { formatDate, formatLyd } from "@/lib/format";
 import { platformLabels } from "@/lib/platform-labels";
 import { cn } from "@/lib/utils";
-import type { ClientCampaign } from "@/types/client";
-
 interface ClientCampaignTableProps {
-  campaigns: ClientCampaign[];
+  campaigns: any[];
   variant?: "recent" | "full";
   title?: string;
   description?: string;
@@ -81,11 +79,11 @@ export function ClientCampaignTable({
                   {campaign.name}
                 </TableCell>
                 <TableCell className="text-zinc-600 dark:text-zinc-400">
-                  {platformLabels[campaign.platform]}
+                  {platformLabels[(campaign.platform ?? "").toLowerCase() as keyof typeof platformLabels] ?? campaign.platform}
                 </TableCell>
                 {isFull ? (
                   <TableCell className="text-zinc-600 dark:text-zinc-400">
-                    {campaign.goal}
+                    {campaign.marketingGoal ?? campaign.goal ?? "—"}
                   </TableCell>
                 ) : null}
                 <TableCell>
@@ -95,7 +93,7 @@ export function ClientCampaignTable({
                   {formatLyd(campaign.budget)}
                 </TableCell>
                 <TableCell className="text-zinc-600 dark:text-zinc-400">
-                  {formatLyd(campaign.spent)}
+                  {formatLyd(campaign.spend ?? campaign.spent ?? 0)}
                 </TableCell>
                 {isFull ? (
                   <>
@@ -109,7 +107,7 @@ export function ClientCampaignTable({
                 ) : (
                   <>
                     <TableCell>
-                      <PerformanceBar value={campaign.performance} />
+                      <PerformanceBar value={campaign.performance ?? 0} />
                     </TableCell>
                     <TableCell className="text-zinc-600 dark:text-zinc-400">
                       {formatDate(campaign.startDate)}

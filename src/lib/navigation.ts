@@ -2,8 +2,8 @@ import {
   BarChart3,
   FileText,
   LayoutDashboard,
+  LogOut,
   Megaphone,
-  Settings,
   User,
   Users,
 } from "lucide-react";
@@ -40,12 +40,6 @@ export const navigationItems: NavigationItem[] = [
     href: "/dashboard/profile",
     icon: User,
     permission: "profile:view",
-  },
-  {
-    key: "settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-    permission: "settings:view",
   },
 ];
 

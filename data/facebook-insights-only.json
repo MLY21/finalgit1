@@ -1,0 +1,2380 @@
+[
+  {
+    "campaign_id": "23857998660730194",
+    "campaign_name": "Post: ‎\"‎معاش تفكر تتحرك من مكانك وتصكر الباب عندنا الحل ليك ‎\"‎",
+    "impressions": "13538",
+    "reach": "12280",
+    "clicks": "1045",
+    "unique_clicks": "907",
+    "spend": "13.11",
+    "cpc": "0.012545",
+    "ctr": "7.719013",
+    "frequency": "1.102443",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "278"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "61"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "4190"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "108"
+      },
+      {
+        "action_type": "comment",
+        "value": "37"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "4190"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "108"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "25"
+      },
+      {
+        "action_type": "post",
+        "value": "3"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "7"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "37"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "7"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "61"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "25"
+      },
+      {
+        "action_type": "video_view",
+        "value": "3804"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "video_view",
+        "value": "0.003446"
+      },
+      {
+        "action_type": "link_click",
+        "value": "0.047158"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.121389"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.003129"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.003129"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.5244"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.5244"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858076631390194",
+    "campaign_name": "Post: ‎\"‎منشر ملابس محلي الصنع  حاجة عمر بادن الله .‎\"‎",
+    "impressions": "29624",
+    "reach": "24354",
+    "clicks": "5201",
+    "unique_clicks": "3391",
+    "spend": "4.7",
+    "cpc": "0.000904",
+    "ctr": "17.556711",
+    "frequency": "1.216392",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "1569"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "163"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "3900"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "176"
+      },
+      {
+        "action_type": "comment",
+        "value": "9"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "3900"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "176"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "3"
+      },
+      {
+        "action_type": "post",
+        "value": "3"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "2155"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "9"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "163"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "3"
+      },
+      {
+        "action_type": "click_to_call_call_confirm",
+        "value": "5"
+      },
+      {
+        "action_type": "call_confirm_grouped",
+        "value": "5"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "call_confirm_grouped",
+        "value": "0.94"
+      },
+      {
+        "action_type": "click_to_call_call_confirm",
+        "value": "0.94"
+      },
+      {
+        "action_type": "link_click",
+        "value": "0.002996"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.026705"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.001205"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.001205"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "1.566667"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "1.566667"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858131229590194",
+    "campaign_name": "المنشور: ‏\"‏يفتحوا عليك في الباب ويمشوا ⁉️‏\"‏",
+    "impressions": "4828",
+    "reach": "4357",
+    "clicks": "679",
+    "unique_clicks": "624",
+    "spend": "1.51",
+    "cpc": "0.002224",
+    "ctr": "14.063795",
+    "frequency": "1.108102",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "17"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "24"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "419"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "28"
+      },
+      {
+        "action_type": "comment",
+        "value": "1"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "419"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "28"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "1"
+      },
+      {
+        "action_type": "post",
+        "value": "1"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "374"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "24"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "1"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.088824"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.053929"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.003604"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.003604"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "1.51"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "1.51"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858235911220194",
+    "campaign_name": "المنشور: ‏\"‏يفتحوا عليك في الباب ويمشوا ⁉️‏\"‏",
+    "impressions": "5841",
+    "reach": "5238",
+    "clicks": "943",
+    "unique_clicks": "825",
+    "spend": "2.68",
+    "cpc": "0.002842",
+    "ctr": "16.144496",
+    "frequency": "1.11512",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "33"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "49"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "609"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "59"
+      },
+      {
+        "action_type": "comment",
+        "value": "5"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "609"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "59"
+      },
+      {
+        "action_type": "post",
+        "value": "2"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "517"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "3"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "5"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "3"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "49"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.081212"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.045424"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.004401"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.004401"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858249227580194",
+    "campaign_name": "منشور Instagram: ‏يفتحوا عليك في الباب ويمشوا ⁉️...",
+    "impressions": "3914",
+    "reach": "3726",
+    "clicks": "13",
+    "unique_clicks": "12",
+    "spend": "1.53",
+    "cpc": "0.117692",
+    "ctr": "0.332141",
+    "frequency": "1.050456",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "8"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "4"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "14"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "6"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "14"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "6"
+      },
+      {
+        "action_type": "post",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "4"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.19125"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.255"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.109286"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.109286"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858259125570194",
+    "campaign_name": "المنشور: ‏\"‏يفتحوا عليك في الباب ويمشوا ⁉️‏\"‏",
+    "impressions": "793",
+    "reach": "760",
+    "clicks": "86",
+    "unique_clicks": "82",
+    "spend": "0.58",
+    "cpc": "0.006744",
+    "ctr": "10.844893",
+    "frequency": "1.043421",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "2"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "2"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "43"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "5"
+      },
+      {
+        "action_type": "comment",
+        "value": "2"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "43"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "5"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "1"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "36"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "1"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.29"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.116"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.013488"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.013488"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.58"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.58"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858485586170194",
+    "campaign_name": "المنشور: ‏\"‏يفتحوا عليك في الباب ويمشوا ⁉️‏\"‏",
+    "impressions": "27737",
+    "reach": "22578",
+    "clicks": "1832",
+    "unique_clicks": "1698",
+    "spend": "12.05",
+    "cpc": "0.006578",
+    "ctr": "6.604896",
+    "frequency": "1.228497",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "71"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "40"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "756"
+      },
+      {
+        "action_type": "like",
+        "value": "1"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "61"
+      },
+      {
+        "action_type": "comment",
+        "value": "7"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "757"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "61"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "24"
+      },
+      {
+        "action_type": "post",
+        "value": "6"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "624"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "8"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "7"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "8"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "40"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "26"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.169718"
+      },
+      {
+        "action_type": "like",
+        "value": "12.05"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.197541"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.015939"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.015918"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.502083"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.463462"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858598480880194",
+    "campaign_name": "Post: ‎\"‎▪️عندك محل وتبي توصل للناس والناس توصلك 🤔‎\"‎",
+    "impressions": "954",
+    "reach": "892",
+    "clicks": "45",
+    "unique_clicks": "43",
+    "spend": "0.64",
+    "cpc": "0.014222",
+    "ctr": "4.716981",
+    "frequency": "1.069507",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "5"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "23"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "33"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "23"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "33"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "23"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "5"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "23"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.128"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.027826"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.019394"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.019394"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858626334520194",
+    "campaign_name": "Post: ‎\"‎يفتحوا عليك في الباب ويمشوا ⁉️‎\"‎",
+    "impressions": "11079",
+    "reach": "9103",
+    "clicks": "552",
+    "unique_clicks": "469",
+    "spend": "5",
+    "cpc": "0.009058",
+    "ctr": "4.982399",
+    "frequency": "1.217071",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "240"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "24"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "2628"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "30"
+      },
+      {
+        "action_type": "comment",
+        "value": "3"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "2628"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "30"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "16"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "3"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "3"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "3"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "24"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "15"
+      },
+      {
+        "action_type": "video_view",
+        "value": "2358"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "video_view",
+        "value": "0.00212"
+      },
+      {
+        "action_type": "link_click",
+        "value": "0.020833"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.166667"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.001903"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.001903"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.3125"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.333333"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858663726870194",
+    "campaign_name": "[09/12/2023] Promoting ‎ليبيا ستور‎",
+    "impressions": "7502",
+    "reach": "5014",
+    "clicks": "523",
+    "unique_clicks": "509",
+    "spend": "2.11",
+    "cpc": "0.004034",
+    "ctr": "6.971474",
+    "frequency": "1.496211",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "41"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "61"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "103"
+      },
+      {
+        "action_type": "like",
+        "value": "451"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "62"
+      },
+      {
+        "action_type": "comment",
+        "value": "1"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "554"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "62"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "61"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.051463"
+      },
+      {
+        "action_type": "like",
+        "value": "0.004678"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.034032"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.020485"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.003809"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858743643010194",
+    "campaign_name": "Post: ‎\"‎يفتحوا عليك في الباب ويمشوا ⁉️‎\"‎",
+    "impressions": "1619",
+    "reach": "1487",
+    "clicks": "82",
+    "unique_clicks": "79",
+    "spend": "0.74",
+    "cpc": "0.009024",
+    "ctr": "5.064855",
+    "frequency": "1.088769",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "1"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "2"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "28"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "3"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "28"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "3"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "1"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "24"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "1"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.74"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.246667"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.026429"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.026429"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.74"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.74"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23858906398070194",
+    "campaign_name": "[09/17/2023] Promoting lerio",
+    "impressions": "5019",
+    "reach": "2809",
+    "clicks": "258",
+    "unique_clicks": "232",
+    "spend": "4.89",
+    "cpc": "0.018953",
+    "ctr": "5.140466",
+    "frequency": "1.786757",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "54"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "21"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "75"
+      },
+      {
+        "action_type": "like",
+        "value": "191"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "21"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "266"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "21"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "21"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.090556"
+      },
+      {
+        "action_type": "like",
+        "value": "0.025602"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.232857"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.0652"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.018383"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23859244836990194",
+    "campaign_name": "Post: ‎\"‎المغلق التلقائي‎\"‎",
+    "impressions": "16171",
+    "reach": "13524",
+    "clicks": "499",
+    "unique_clicks": "449",
+    "spend": "10",
+    "cpc": "0.02004",
+    "ctr": "3.085771",
+    "frequency": "1.195726",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "302"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "25"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_block",
+        "value": "1"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "5405"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "27"
+      },
+      {
+        "action_type": "comment",
+        "value": "1"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "5405"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "27"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "18"
+      },
+      {
+        "action_type": "post",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "25"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "19"
+      },
+      {
+        "action_type": "video_view",
+        "value": "5076"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "video_view",
+        "value": "0.00197"
+      },
+      {
+        "action_type": "link_click",
+        "value": "0.033113"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.37037"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.00185"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.00185"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.555556"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.526316"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23860352065640194",
+    "campaign_name": "المنشور: ‏\"‏الاستراحة 05 للايجار اليومي 🫂❤️‍🩹‏\"‏",
+    "impressions": "9387",
+    "reach": "4898",
+    "clicks": "1072",
+    "unique_clicks": "763",
+    "spend": "12",
+    "cpc": "0.011194",
+    "ctr": "11.420049",
+    "frequency": "1.916497",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "77"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "24"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "1"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "474"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "34"
+      },
+      {
+        "action_type": "comment",
+        "value": "8"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "474"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "34"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "21"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "363"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "8"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "24"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "28"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.155844"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.352941"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "0"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.025316"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.025316"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.571429"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.428571"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23860352349940194",
+    "campaign_name": "المنشور: ‏\"‏الاستراحة 04 للايجار اليومي 🥹❤️‍🔥‏\"‏",
+    "impressions": "7961",
+    "reach": "4540",
+    "clicks": "1091",
+    "unique_clicks": "843",
+    "spend": "12",
+    "cpc": "0.010999",
+    "ctr": "13.704309",
+    "frequency": "1.753524",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "79"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "30"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "451"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "39"
+      },
+      {
+        "action_type": "comment",
+        "value": "6"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "451"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "39"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "22"
+      },
+      {
+        "action_type": "post",
+        "value": "2"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "333"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "6"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "30"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "24"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.151899"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.307692"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.026608"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.026608"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.545455"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.5"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23860352979260194",
+    "campaign_name": "المنشور: ‏\"‏الاستراحة [03] للايجار اليومي ❤️‍🔥🥳.‏\"‏",
+    "impressions": "14313",
+    "reach": "7250",
+    "clicks": "2422",
+    "unique_clicks": "1664",
+    "spend": "12",
+    "cpc": "0.004955",
+    "ctr": "16.92168",
+    "frequency": "1.974207",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "193"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "46"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "4"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "1026"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "71"
+      },
+      {
+        "action_type": "comment",
+        "value": "17"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "1026"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "71"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "72"
+      },
+      {
+        "action_type": "post",
+        "value": "3"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "762"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "5"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "17"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "5"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "46"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "82"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.062176"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.169014"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "0"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.011696"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.011696"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.166667"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.146341"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23861693318380194",
+    "campaign_name": "المنشور: ‏\"‏مذاقنا يترگ أثرًا فـي فَمِــك...!‏\"‏",
+    "impressions": "35313",
+    "reach": "22790",
+    "clicks": "3629",
+    "unique_clicks": "3178",
+    "spend": "6",
+    "cpc": "0.001653",
+    "ctr": "10.276669",
+    "frequency": "1.549495",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "1"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "1738"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "2705"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "1753"
+      },
+      {
+        "action_type": "comment",
+        "value": "11"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "2705"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "1753"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "951"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "4"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "11"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "4"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "1738"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "6"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.003423"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.002218"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.002218"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23861730002030194",
+    "campaign_name": "المنشور: ‏\"‏الباب يقعد مفتوح والشتاء قريب والجو صقع ❓‏\"‏",
+    "impressions": "5164",
+    "reach": "4366",
+    "clicks": "300",
+    "unique_clicks": "259",
+    "spend": "3.48",
+    "cpc": "0.0116",
+    "ctr": "5.80945",
+    "frequency": "1.182776",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "133"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "11"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "10"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "1725"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "13"
+      },
+      {
+        "action_type": "comment",
+        "value": "2"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "1725"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "13"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "8"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "11"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "9"
+      },
+      {
+        "action_type": "video_view",
+        "value": "1579"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "video_view",
+        "value": "0.002204"
+      },
+      {
+        "action_type": "link_click",
+        "value": "0.026165"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.267692"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "0.348"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.002017"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.002017"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.435"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.386667"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23861773936830194",
+    "campaign_name": "المنشور: ‏\"‏كيبورد وماوس T - WOLF 🖱⌨‏\"‏",
+    "impressions": "10846",
+    "reach": "6894",
+    "clicks": "953",
+    "unique_clicks": "724",
+    "spend": "5",
+    "cpc": "0.005247",
+    "ctr": "8.786649",
+    "frequency": "1.573252",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "49"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "35"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "31"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "338"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "72"
+      },
+      {
+        "action_type": "comment",
+        "value": "21"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "338"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "72"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "26"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "217"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "16"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "21"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "16"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "35"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "26"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.102041"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.069444"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "0.16129"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.014793"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.014793"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.192308"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.192308"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23861814606320194",
+    "campaign_name": "المنشور: ‏\"‏تخفيض كبير لمدة 48 ساعة⏳ السعر 10 دينار 🔥🔥‏\"‏",
+    "impressions": "614",
+    "reach": "595",
+    "clicks": "25",
+    "unique_clicks": "23",
+    "spend": "0.39",
+    "cpc": "0.0156",
+    "ctr": "4.071661",
+    "frequency": "1.031933",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "10"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "3"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "219"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "3"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "219"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "3"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "3"
+      },
+      {
+        "action_type": "video_view",
+        "value": "206"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "video_view",
+        "value": "0.001893"
+      },
+      {
+        "action_type": "link_click",
+        "value": "0.039"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.13"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.001781"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.001781"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23862074125260194",
+    "campaign_name": "المنشور: ‏\"‏كيبورد وماوس T - WOLF 🖱⌨‏\"‏",
+    "impressions": "13769",
+    "reach": "8814",
+    "clicks": "1032",
+    "unique_clicks": "776",
+    "spend": "5",
+    "cpc": "0.004845",
+    "ctr": "7.495098",
+    "frequency": "1.562174",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "74"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "35"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_block",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "48"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "345"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "65"
+      },
+      {
+        "action_type": "comment",
+        "value": "22"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "345"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "65"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "44"
+      },
+      {
+        "action_type": "post",
+        "value": "1"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "206"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "7"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "22"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "7"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "35"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "43"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.067568"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.076923"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "0.104167"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.014493"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.014493"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.113636"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.116279"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23862310003780194",
+    "campaign_name": "المنشور: ‏\"‏كيبورد وماوس T - WOLF 🖱⌨‏\"‏",
+    "impressions": "2180",
+    "reach": "1933",
+    "clicks": "142",
+    "unique_clicks": "133",
+    "spend": "1.1",
+    "cpc": "0.007746",
+    "ctr": "6.513761",
+    "frequency": "1.127781",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "6"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "4"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "5"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "46"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "7"
+      },
+      {
+        "action_type": "comment",
+        "value": "2"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "46"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "7"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "2"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "33"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "2"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "4"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "2"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.183333"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.157143"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "0.22"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.023913"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.023913"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.55"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.55"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "23862425150350194",
+    "campaign_name": "المنشور: ‏\"‏كيبورد وماوس T - WOLF 🖱⌨‏\"‏",
+    "impressions": "13755",
+    "reach": "8960",
+    "clicks": "960",
+    "unique_clicks": "734",
+    "spend": "5",
+    "cpc": "0.005208",
+    "ctr": "6.97928",
+    "frequency": "1.535156",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "59"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "30"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "28"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "306"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "55"
+      },
+      {
+        "action_type": "comment",
+        "value": "17"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "306"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "55"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "25"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "192"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "8"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "17"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "8"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "30"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "25"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.084746"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.090909"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "0.178571"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.01634"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.01634"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.2"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.2"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "120200088098420195",
+    "campaign_name": "المنشور: ‏\"‏منشر ملابس قابل لطي‏\"‏",
+    "impressions": "22402",
+    "reach": "18703",
+    "clicks": "1702",
+    "unique_clicks": "1307",
+    "spend": "5",
+    "cpc": "0.002938",
+    "ctr": "7.597536",
+    "frequency": "1.197776",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "490"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "90"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "51"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "5175"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "127"
+      },
+      {
+        "action_type": "comment",
+        "value": "25"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "5175"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "127"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "44"
+      },
+      {
+        "action_type": "post",
+        "value": "3"
+      },
+      {
+        "action_type": "onsite_conversion.post_save",
+        "value": "9"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_comment",
+        "value": "25"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_save",
+        "value": "9"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "90"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "45"
+      },
+      {
+        "action_type": "video_view",
+        "value": "4558"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "video_view",
+        "value": "0.001097"
+      },
+      {
+        "action_type": "link_click",
+        "value": "0.010204"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.03937"
+      },
+      {
+        "action_type": "onsite_conversion.total_messaging_connection",
+        "value": "0.098039"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.000966"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.000966"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_first_reply",
+        "value": "0.113636"
+      },
+      {
+        "action_type": "onsite_conversion.messaging_conversation_started_7d",
+        "value": "0.111111"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  },
+  {
+    "campaign_id": "120200252237500195",
+    "campaign_name": "المنشور: ‏\"‏كمبيوتر بأداء عالي ⬆️ ‏\"‏",
+    "impressions": "540",
+    "reach": "535",
+    "clicks": "104",
+    "unique_clicks": "93",
+    "spend": "0.19",
+    "cpc": "0.001827",
+    "ctr": "19.259259",
+    "frequency": "1.009346",
+    "actions": [
+      {
+        "action_type": "link_click",
+        "value": "5"
+      },
+      {
+        "action_type": "post_reaction",
+        "value": "3"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "9"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "3"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "9"
+      },
+      {
+        "action_type": "post_interaction_net",
+        "value": "3"
+      },
+      {
+        "action_type": "photo_view",
+        "value": "1"
+      },
+      {
+        "action_type": "onsite_conversion.post_net_like",
+        "value": "3"
+      }
+    ],
+    "cost_per_action_type": [
+      {
+        "action_type": "link_click",
+        "value": "0.038"
+      },
+      {
+        "action_type": "post_interaction_gross",
+        "value": "0.063333"
+      },
+      {
+        "action_type": "post_engagement",
+        "value": "0.021111"
+      },
+      {
+        "action_type": "page_engagement",
+        "value": "0.021111"
+      }
+    ],
+    "date_start": "2023-05-17",
+    "date_stop": "2026-06-17"
+  }
+]

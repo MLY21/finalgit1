@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Search, List, LayoutGrid } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Search, List, LayoutGrid, ArrowUpDown, Database } from "lucide-react";
 import Link from "next/link";
 
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
@@ -12,7 +12,6 @@ import { DashboardCard } from "@/components/dashboard/dashboard-card";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { clientCampaigns } from "@/data/client-dashboard";
 import { formatLyd, formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -35,19 +34,30 @@ export default function UserCampaignsPage() {
   const [platform, setPlatform] = useState("all");
   const [status, setStatus] = useState("all");
   const [viewMode, setViewMode] = useState<"list" | "card">("card");
+  const [campaigns, setCampaigns] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/user/campaigns")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setCampaigns(d.data);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return clientCampaigns.filter((campaign) => {
+    return campaigns.filter((campaign: any) => {
       const matchesSearch =
         !query ||
         campaign.name.toLowerCase().includes(query) ||
-        campaign.goal.toLowerCase().includes(query);
+        (campaign.marketingGoal ?? "").toLowerCase().includes(query);
       const matchesPlatform = platform === "all" || campaign.platform === platform;
       const matchesStatus = status === "all" || campaign.status === status;
       return matchesSearch && matchesPlatform && matchesStatus;
     });
-  }, [search, platform, status]);
+  }, [search, platform, status, campaigns]);
 
   return (
     <div className="space-y-6">
@@ -57,7 +67,16 @@ export default function UserCampaignsPage() {
           title="My Campaigns"
           description="Browse and review the advertising campaigns running for your account."
         />
-        <div className="flex items-center gap-3 self-start sm:self-center shrink-0">
+        <div className="flex items-center gap-3 self-start sm:self-center shrink-0 flex-wrap">
+          <Link
+            href="/user/compare"
+            className={cn(
+              "inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors shrink-0"
+            )}
+          >
+            <ArrowUpDown className="size-3.5" />
+            Compare Campaigns
+          </Link>
           {/* View Switcher Segmented Control */}
           <div className="flex items-center border border-zinc-200 dark:border-zinc-800 rounded-lg p-0.5 bg-zinc-100 dark:bg-zinc-900/60 shrink-0">
             <button
@@ -125,12 +144,24 @@ export default function UserCampaignsPage() {
         </div>
       </DashboardCard>
 
-      {filtered.length > 0 ? (
+      {loading ? (
+        <DashboardCard className="flex min-h-[200px] items-center justify-center p-8">
+          <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Loading campaigns...</p>
+        </DashboardCard>
+      ) : campaigns.length === 0 ? (
+        <DashboardCard className="flex flex-col items-center justify-center gap-4 py-20">
+          <Database className="size-12 text-zinc-300 dark:text-zinc-600" />
+          <div className="text-center">
+            <p className="text-lg font-semibold text-zinc-700 dark:text-zinc-300">No campaign data available yet.</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Your campaigns will appear here once they are imported.</p>
+          </div>
+        </DashboardCard>
+      ) : filtered.length > 0 ? (
         viewMode === "list" ? (
           <ClientCampaignTable campaigns={filtered} variant="full" />
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((campaign) => {
+            {filtered.map((campaign: any) => {
               const platformName = campaign.platform === "meta" ? "Meta Ads" : campaign.platform === "google" ? "Google Ads" : "TikTok Ads";
               return (
                 <div
@@ -182,7 +213,7 @@ export default function UserCampaignsPage() {
                         {campaign.name}
                       </Link>
                       <p className="text-xs text-muted-foreground">
-                        Goal: <span className="font-semibold text-foreground/80">{campaign.goal}</span>
+                        Goal: <span className="font-semibold text-foreground/80">{campaign.marketingGoal}</span>
                       </p>
                     </div>
 
@@ -194,11 +225,11 @@ export default function UserCampaignsPage() {
                       </div>
                       <div>
                         <p className="text-muted-foreground">Spent</p>
-                        <p className="text-foreground font-bold mt-0.5 truncate">{formatLyd(campaign.spent)}</p>
+                        <p className="text-foreground font-bold mt-0.5 truncate">{formatLyd(campaign.spend)}</p>
                       </div>
                       <div>
-                        <p className="text-muted-foreground text-center">Leads</p>
-                        <p className="text-foreground font-bold text-center mt-0.5">{campaign.leads}</p>
+                        <p className="text-muted-foreground text-center">Messages</p>
+                        <p className="text-foreground font-bold text-center mt-0.5">{campaign.messages}</p>
                       </div>
                     </div>
                   </div>

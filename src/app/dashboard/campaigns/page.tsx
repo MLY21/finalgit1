@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   Megaphone, 
@@ -28,22 +28,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { mockCampaigns, CampaignDetails } from "@/data/campaigns";
 import { formatLyd } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 export default function CampaignsPage() {
-  const [campaigns, setCampaigns] = useState<CampaignDetails[]>(mockCampaigns);
+  const [campaigns, setCampaigns] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [platformFilter, setPlatformFilter] = useState<string>("All Platforms");
   const [statusFilter, setStatusFilter] = useState<string>("All");
   const [syncingId, setSyncingId] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"list" | "card">("card");
+  const [clientFilter, setClientFilter] = useState<string>("All Clients");
+  const [clientOptions, setClientOptions] = useState<{ id: string; name: string }[]>([]);
 
-  const handleDeleteCampaign = (id: string, name: string) => {
-    if (confirm(`Are you sure you want to delete campaign "${name}"?`)) {
-      setCampaigns(campaigns.filter((camp) => camp.id !== id));
-      alert(`Campaign "${name}" has been removed from the synchronized list.`);
+  useEffect(() => {
+    fetch("/api/campaigns")
+      .then((r) => r.json())
+      .then((d) => { if (d.success) setCampaigns(d.data); })
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/clients")
+      .then((r) => r.json())
+      .then((d) => { if (d.success) setClientOptions(d.data.map((c: any) => ({ id: c.id, name: c.name }))); });
+  }, []);
+
+  const handleDeleteCampaign = async (id: string, name: string) => {
+    if (!confirm(`Are you sure you want to delete campaign "${name}"? This cannot be undone.`)) return;
+    const res = await fetch(`/api/campaigns/${id}`, { method: "DELETE" });
+    if (res.ok) {
+      setCampaigns((prev) => prev.filter((camp) => camp.id !== id));
+    } else {
+      alert("Failed to delete campaign. Please try again.");
     }
   };
 
@@ -72,8 +90,9 @@ export default function CampaignsPage() {
     
     const matchesPlatform = platformFilter === "All Platforms" || camp.platform === platformFilter;
     const matchesStatus = statusFilter === "All" || camp.status === statusFilter;
+    const matchesClient = clientFilter === "All Clients" || camp.clientId === clientFilter;
 
-    return matchesSearch && matchesPlatform && matchesStatus;
+    return matchesSearch && matchesPlatform && matchesStatus && matchesClient;
   });
 
   return (
@@ -125,8 +144,15 @@ export default function CampaignsPage() {
         </div>
       </div>
 
+      {/* Loading State */}
+      {isLoading && (
+        <div className="flex items-center justify-center py-16 text-sm text-zinc-500 dark:text-zinc-400">
+          Loading campaigns...
+        </div>
+      )}
+
       {/* Main Container containing Action Bar and Content */}
-      <DashboardCard className="overflow-hidden">
+      {!isLoading && <DashboardCard className="overflow-hidden">
         {/* Action Bar */}
         <div className="flex flex-col gap-4 p-4 border-b border-zinc-200 dark:border-zinc-800 sm:flex-row sm:items-center sm:p-5">
           {/* Search */}
@@ -143,6 +169,20 @@ export default function CampaignsPage() {
 
           {/* Filters Row */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center w-full sm:w-auto">
+            {/* Client Filter */}
+            <div className="w-full sm:w-40">
+              <select
+                value={clientFilter}
+                onChange={(e) => setClientFilter(e.target.value)}
+                className="h-10 rounded-lg border border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-900 outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-600 dark:focus:ring-zinc-600 transition-colors w-full cursor-pointer font-semibold"
+              >
+                <option value="All Clients">All Clients</option>
+                {clientOptions.map((c) => (
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+
             {/* Platform Filter */}
             <div className="w-full sm:w-44">
               <select
@@ -425,12 +465,21 @@ export default function CampaignsPage() {
                             size="icon"
                             disabled={isSyncing}
                             className={cn(
-                              "h-9 rounded-lg",
+                              "h-9 w-9 rounded-lg",
                               isSyncing && "cursor-not-allowed opacity-75"
                             )}
                             onClick={() => handleSyncCampaign(camp.id, camp.name)}
                           >
                             <RefreshCw className={cn("size-4", isSyncing && "animate-spin")} />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9 rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/30 dark:hover:text-rose-400"
+                            title="Delete Campaign"
+                            onClick={() => handleDeleteCampaign(camp.id, camp.name)}
+                          >
+                            <Trash2 className="size-4" />
                           </Button>
                         </div>
                       </div>
@@ -527,6 +576,15 @@ export default function CampaignsPage() {
                       <RefreshCw className={cn("size-3.5", isSyncing && "animate-spin text-blue-500")} />
                       {isSyncing ? "Syncing..." : "Sync"}
                     </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/30 dark:hover:text-rose-400"
+                      title="Delete Campaign"
+                      onClick={() => handleDeleteCampaign(camp.id, camp.name)}
+                    >
+                      <Trash2 className="size-3.5" />
+                    </Button>
                   </div>
                 </div>
               );
@@ -537,7 +595,7 @@ export default function CampaignsPage() {
             </div>
           )}
         </div>
-      </DashboardCard>
+      </DashboardCard>}
     </div>
   );
 }

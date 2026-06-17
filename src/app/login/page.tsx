@@ -1,9 +1,46 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { APP_NAME } from "@/lib/constants";
-import { Mail, Lock, ArrowRight } from "lucide-react";
+import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message ?? "Login failed. Please try again.");
+        return;
+      }
+
+      router.push(data.redirectTo);
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm">
@@ -29,8 +66,15 @@ export default function LoginPage() {
             Welcome back to {APP_NAME}
           </p>
 
+          {/* Error Message */}
+          {error && (
+            <div className="mb-5 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              {error}
+            </div>
+          )}
+
           {/* Form */}
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             {/* Email Field */}
             <div className="space-y-2">
               <label
@@ -48,6 +92,9 @@ export default function LoginPage() {
                   autoComplete="email"
                   required
                   className="pl-10"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -69,6 +116,9 @@ export default function LoginPage() {
                   autoComplete="current-password"
                   required
                   className="pl-10"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -84,9 +134,18 @@ export default function LoginPage() {
             </div>
 
             {/* Sign In Button */}
-            <Button type="submit" className="w-full" size="lg">
-              Sign In
-              <ArrowRight className="ml-2 h-4 w-4" />
+            <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                <>
+                  Sign In
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </>
+              )}
             </Button>
           </form>
         </div>

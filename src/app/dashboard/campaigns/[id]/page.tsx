@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { 
@@ -21,7 +21,12 @@ import {
   Layers,
   Database,
   Briefcase,
-  Clock
+  Clock,
+  BarChart2,
+  Percent,
+  Target,
+  TrendingDown,
+  Minus
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -37,15 +42,6 @@ import {
 import { DashboardCard } from "@/components/dashboard/dashboard-card";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { mockCampaigns, CampaignDetails } from "@/data/campaigns";
 import { formatLyd } from "@/lib/format";
 import { useChartTheme } from "@/hooks/use-chart-theme";
 import { cn } from "@/lib/utils";
@@ -59,12 +55,35 @@ export default function CampaignDetailsPage({ params }: CampaignDetailsPageProps
   const router = useRouter();
   const chartTheme = useChartTheme();
 
-  const campaign = mockCampaigns.find((c) => c.id === resolvedParams.id);
-
-  const [currentCampaign, setCurrentCampaign] = useState<CampaignDetails | undefined>(campaign);
+  const [currentCampaign, setCurrentCampaign] = useState<any>(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
   const [syncing, setSyncing] = useState(false);
 
-  if (!currentCampaign) {
+  const loadCampaign = () => {
+    fetch(`/api/campaigns/${resolvedParams.id}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setCurrentCampaign(d.data);
+        else setNotFound(true);
+      })
+      .catch(() => setNotFound(true))
+      .finally(() => setIsLoading(false));
+  };
+
+  useEffect(() => {
+    loadCampaign();
+  }, [resolvedParams.id]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-20 text-sm text-zinc-500 dark:text-zinc-400">
+        Loading campaign...
+      </div>
+    );
+  }
+
+  if (notFound || !currentCampaign) {
     return (
       <div className="space-y-4 max-w-4xl mx-auto py-12 text-center">
         <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Campaign Not Found</h2>
@@ -82,53 +101,48 @@ export default function CampaignDetailsPage({ params }: CampaignDetailsPageProps
 
   const handleSyncCampaign = async () => {
     setSyncing(true);
-    // Simulate real-time synchronization with ad platform APIs (Meta, Google, TikTok)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    const now = new Date();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    const formattedDate = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
-    
-    setCurrentCampaign((prev) => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        lastSync: formattedDate,
-        // Simulate a slight metric increase on sync to make it realistic
-        views: prev.views + Math.floor(Math.random() * 250) + 50,
-        clicks: prev.clicks + Math.floor(Math.random() * 15) + 2,
-        leads: prev.leads + (Math.random() > 0.7 ? 1 : 0),
-      };
-    });
-    setSyncing(false);
+    try {
+      await fetch("/api/campaigns/sync-facebook", { method: "POST" });
+      loadCampaign();
+    } catch {
+      // silent fail
+    } finally {
+      setSyncing(false);
+    }
   };
+
+  // ── Performance Summary computation ─────────────────────────
+  const ctrScore = currentCampaign.ctr >= 3 ? 2 : currentCampaign.ctr >= 1 ? 1 : 0;
+  const cplScore = !currentCampaign.cpl || currentCampaign.cpl <= 0 ? 1 : currentCampaign.cpl <= 30 ? 2 : currentCampaign.cpl <= 80 ? 1 : 0;
+  const convScore = currentCampaign.conversionRate >= 5 ? 2 : currentCampaign.conversionRate >= 2 ? 1 : 0;
+  const summaryTotal = ctrScore + cplScore + convScore;
+  const summaryTier = summaryTotal >= 5 ? "good" : summaryTotal >= 3 ? "avg" : "poor";
+  const ctrTier = ctrScore === 2 ? "good" : ctrScore === 1 ? "avg" : "poor";
+  const cplTier = cplScore === 2 ? "good" : cplScore === 1 ? "avg" : "poor";
+  const convTier = convScore === 2 ? "good" : convScore === 1 ? "avg" : "poor";
+
+  const tierStyles = {
+    good: { dot: "bg-emerald-500", value: "text-emerald-600 dark:text-emerald-400", badge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-950/20", iconBg: "bg-emerald-100 dark:bg-emerald-900/30", label: "Good" },
+    avg:  { dot: "bg-amber-500",   value: "text-amber-600 dark:text-amber-400",     badge: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",     bg: "bg-amber-50 dark:bg-amber-950/20",   iconBg: "bg-amber-100 dark:bg-amber-900/30",   label: "Moderate" },
+    poor: { dot: "bg-rose-500",    value: "text-rose-600 dark:text-rose-400",       badge: "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400",       bg: "bg-rose-50 dark:bg-rose-950/20",     iconBg: "bg-rose-100 dark:bg-rose-900/30",     label: "Needs Attention" },
+  };
+  const SummaryIcon = summaryTier === "good" ? TrendingUp : summaryTier === "avg" ? Minus : TrendingDown;
+  const summaryOverallLabel = summaryTier === "good" ? "Strong Performance" : summaryTier === "avg" ? "Moderate Performance" : "Needs Attention";
+  const summaryText = summaryTier === "good"
+    ? `The campaign demonstrates strong engagement with a CTR of ${currentCampaign.ctr.toFixed(2)}%. Lead acquisition remains efficient at ${formatLyd(currentCampaign.cpl)} per lead, while the conversion rate of ${currentCampaign.conversionRate.toFixed(2)}% indicates effective audience targeting and overall campaign performance.`
+    : summaryTier === "avg"
+    ? `The campaign is generating stable engagement with a CTR of ${currentCampaign.ctr.toFixed(2)}% and a conversion rate of ${currentCampaign.conversionRate.toFixed(2)}%. While performance remains within acceptable levels, additional optimization may reduce the cost per lead of ${formatLyd(currentCampaign.cpl)} and improve conversion outcomes.`
+    : `The campaign is experiencing lower-than-expected engagement with a CTR of ${currentCampaign.ctr.toFixed(2)}% and a conversion rate of ${currentCampaign.conversionRate.toFixed(2)}%. The current cost per lead of ${currentCampaign.cpl > 0 ? formatLyd(currentCampaign.cpl) : "N/A"} suggests inefficiencies in targeting. Consider reviewing audience segments, budget allocation, and ad creatives to improve results.`;
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
-      {/* Breadcrumb and Back Navigation */}
-      <div className="space-y-1.5">
-        <div className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
-          <Link href="/dashboard" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-            Dashboard
-          </Link>
-          <span>/</span>
-          <Link href="/dashboard/campaigns" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-            Campaigns
-          </Link>
-          <span>/</span>
-          <span className="text-zinc-900 dark:text-zinc-100 font-semibold truncate max-w-[200px]" title={currentCampaign.name}>
-            {currentCampaign.name}
-          </span>
-        </div>
-        
-        {/* Back Link */}
-        <Link 
-          href="/dashboard/campaigns" 
-          className="inline-flex items-center text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors gap-1"
-        >
-          <ArrowLeft className="size-3.5" /> Back to Campaigns directory
-        </Link>
-      </div>
+      {/* Back Link */}
+      <Link
+        href="/dashboard/campaigns"
+        className="inline-flex items-center text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors gap-1"
+      >
+        <ArrowLeft className="size-3.5" /> Back to Campaigns directory
+      </Link>
 
       {/* Campaign Details Header */}
       <DashboardCard className="p-5 sm:p-6">
@@ -279,9 +293,9 @@ export default function CampaignDetailsPage({ params }: CampaignDetailsPageProps
       {/* FINANCIAL OVERVIEW */}
       <div className="space-y-3">
         <h3 className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider px-1">
-          Financial Status (LYD)
+          Financial Status (USD)
         </h3>
-        <div className="grid gap-4 grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-4 grid-cols-2 lg:grid-cols-3">
           {/* Card 1: Budget */}
           <DashboardCard className="p-4">
             <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Total Budget</p>
@@ -305,26 +319,10 @@ export default function CampaignDetailsPage({ params }: CampaignDetailsPageProps
               {formatLyd(currentCampaign.budget - currentCampaign.spent)}
             </h4>
           </DashboardCard>
-
-          {/* Card 4: Revenue */}
-          <DashboardCard className="p-4">
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Total Revenue</p>
-            <h4 className="text-base font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">
-              {formatLyd(currentCampaign.revenue)}
-            </h4>
-          </DashboardCard>
-
-          {/* Card 5: Profit */}
-          <DashboardCard className="p-4">
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Net Profit</p>
-            <h4 className="text-base font-extrabold text-blue-600 dark:text-blue-400 mt-1">
-              {formatLyd(currentCampaign.profit)}
-            </h4>
-          </DashboardCard>
         </div>
       </div>
 
-      {/* Grid containing Chart & Expenses / External Info */}
+      {/* Grid containing Chart & External Info */}
       <div className="grid gap-6 lg:grid-cols-3">
         
         {/* Performance Chart over time (Spans 2 columns on lg) */}
@@ -410,47 +408,8 @@ export default function CampaignDetailsPage({ params }: CampaignDetailsPageProps
           </DashboardCard>
         </div>
 
-        {/* Expenses and External Info (Spans 1 column on lg) */}
+        {/* External Info (Spans 1 column on lg) */}
         <div className="lg:col-span-1 space-y-6">
-          
-          {/* Expenses Section */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider px-1">
-              Campaign Ad Spend & Expenses
-            </h3>
-            <DashboardCard className="overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/10">
-                    <TableHead className="ps-4 text-zinc-500 dark:text-zinc-400 text-xs">
-                      Expense Name
-                    </TableHead>
-                    <TableHead className="pe-4 text-zinc-500 dark:text-zinc-400 text-end text-xs">
-                      Amount
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {currentCampaign.expenses.map((expense, idx) => (
-                    <TableRow 
-                      key={idx} 
-                      className="border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 text-xs"
-                    >
-                      <TableCell className="ps-4 py-3 min-w-0">
-                        <p className="font-semibold text-zinc-900 dark:text-zinc-100 truncate max-w-[170px]" title={expense.name}>
-                          {expense.name}
-                        </p>
-                        <p className="text-[10px] text-zinc-400 mt-0.5">{expense.date}</p>
-                      </TableCell>
-                      <TableCell className="pe-4 py-3 text-end font-bold text-zinc-800 dark:text-zinc-200">
-                        {formatLyd(expense.amount)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </DashboardCard>
-          </div>
 
           {/* Meta Ads Integration Preparation */}
           <div className="space-y-3">
@@ -498,6 +457,82 @@ export default function CampaignDetailsPage({ params }: CampaignDetailsPageProps
         </div>
 
       </div>
+
+      {/* PERFORMANCE SUMMARY */}
+      <div className="space-y-3">
+        <h3 className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider px-1">
+          Performance Summary
+        </h3>
+        <DashboardCard className="p-6 space-y-5">
+
+          {/* Header row */}
+          <div className="flex items-center gap-3">
+            <div className={cn("p-2.5 rounded-xl shrink-0", tierStyles[summaryTier].iconBg)}>
+              <SummaryIcon className={cn("size-5", tierStyles[summaryTier].value)} />
+            </div>
+            <div>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Overall Campaign Health</p>
+              <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{summaryOverallLabel}</h4>
+            </div>
+            <span className={cn("ml-auto px-3 py-1 rounded-full text-xs font-semibold", tierStyles[summaryTier].badge)}>
+              {tierStyles[summaryTier].label}
+            </span>
+          </div>
+
+          {/* Metrics row */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-1">
+
+            {/* CTR */}
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span className={cn("size-2 rounded-full shrink-0", tierStyles[ctrTier].dot)} />
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold uppercase tracking-wider">Click-Through Rate</p>
+              </div>
+              <p className={cn("text-2xl font-extrabold", tierStyles[ctrTier].value)}>
+                {currentCampaign.ctr.toFixed(2)}%
+              </p>
+              <p className="text-[10px] text-zinc-400">clicks ÷ impressions × 100</p>
+            </div>
+
+            {/* CPL */}
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span className={cn("size-2 rounded-full shrink-0", tierStyles[cplTier].dot)} />
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold uppercase tracking-wider">Cost Per Lead</p>
+              </div>
+              <p className={cn("text-2xl font-extrabold", tierStyles[cplTier].value)}>
+                {currentCampaign.cpl > 0 ? formatLyd(currentCampaign.cpl) : "—"}
+              </p>
+              <p className="text-[10px] text-zinc-400">total spend ÷ leads</p>
+            </div>
+
+            {/* Conversion Rate */}
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span className={cn("size-2 rounded-full shrink-0", tierStyles[convTier].dot)} />
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold uppercase tracking-wider">Conversion Rate</p>
+              </div>
+              <p className={cn("text-2xl font-extrabold", tierStyles[convTier].value)}>
+                {currentCampaign.conversionRate.toFixed(2)}%
+              </p>
+              <p className="text-[10px] text-zinc-400">conversions ÷ clicks × 100</p>
+            </div>
+
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-zinc-100 dark:border-zinc-800" />
+
+          {/* Dynamic executive summary text */}
+          <div className={cn("rounded-xl p-4", tierStyles[summaryTier].bg)}>
+            <p className={cn("text-sm leading-relaxed font-medium", tierStyles[summaryTier].value)}>
+              {summaryText}
+            </p>
+          </div>
+
+        </DashboardCard>
+      </div>
+
     </div>
   );
 }

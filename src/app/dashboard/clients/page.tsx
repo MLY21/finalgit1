@@ -9,13 +9,15 @@ import {
   Edit, 
   Trash2,
   LayoutGrid,
-  List
+  List,
+  X,
+  CheckCircle2,
+  AlertCircle,
 } from "lucide-react";
 
 import { DashboardCard } from "@/components/dashboard/dashboard-card";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -25,21 +27,108 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { mockClients, Client } from "@/data/clients";
+import { Input } from "@/components/ui/input";
+
+interface Client {
+  id: string;
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  businessType: string;
+  status: string;
+  notes?: string;
+  avatarInitials?: string;
+  createdAt?: string;
+  campaignsCount: number;
+  totalBudget: number;
+  totalRevenue: number;
+}
 import { formatLyd } from "@/lib/format";
 import { ClientStatusBadge } from "@/components/dashboard/clients/client-status-badge";
 import { cn } from "@/lib/utils";
 
+const BUSINESS_TYPES = ["E-commerce", "Restaurant", "Clinic", "Education", "Real Estate", "Other"];
+const STATUS_OPTIONS = ["active", "inactive", "pending", "suspended"];
+
 export default function ClientsPage() {
-  const [clients, setClients] = useState<Client[]>(mockClients);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "active" | "inactive" | "pending">("all");
   const [viewMode, setViewMode] = useState<"list" | "card">("card");
 
-  const handleDeleteClient = (id: string, name: string) => {
-    if (confirm(`Are you sure you want to delete client "${name}"?`)) {
-      setClients(clients.filter((client) => client.id !== id));
-      alert(`Client "${name}" has been deleted.`);
+  const [toast, setToast] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const showToast = (type: "success" | "error", msg: string) => {
+    setToast({ type, msg });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const [editTarget, setEditTarget] = useState<Client | null>(null);
+  const [editForm, setEditForm] = useState({ name: "", company: "", email: "", phone: "", businessType: "", status: "", notes: "" });
+  const [editLoading, setEditLoading] = useState(false);
+
+  const loadClients = () => {
+    setIsLoading(true);
+    fetch("/api/clients")
+      .then((res) => res.json())
+      .then((data) => { if (data.success) setClients(data.data); })
+      .finally(() => setIsLoading(false));
+  };
+
+  useEffect(() => { loadClients(); }, []);
+
+  const openEdit = (client: Client) => {
+    setEditTarget(client);
+    setEditForm({
+      name: client.name,
+      company: client.company,
+      email: client.email,
+      phone: client.phone,
+      businessType: client.businessType,
+      status: client.status,
+      notes: client.notes ?? "",
+    });
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editTarget) return;
+    setEditLoading(true);
+    try {
+      const res = await fetch(`/api/clients/${editTarget.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editForm),
+      });
+      const data = await res.json();
+      if (!res.ok) { showToast("error", data.message ?? "Failed to update client."); return; }
+      setEditTarget(null);
+      loadClients();
+      showToast("success", "Client updated successfully.");
+    } catch {
+      showToast("error", "Something went wrong.");
+    } finally {
+      setEditLoading(false);
+    }
+  };
+
+  const handleDeleteClient = async () => {
+    if (!deleteTarget) return;
+    setDeleteLoading(true);
+    try {
+      const res = await fetch(`/api/clients/${deleteTarget.id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (!res.ok) { showToast("error", data.message ?? "Failed to delete client."); return; }
+      setDeleteTarget(null);
+      setClients((prev) => prev.filter((c) => c.id !== deleteTarget.id));
+      showToast("success", "Client deleted successfully.");
+    } catch {
+      showToast("error", "Something went wrong.");
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -104,8 +193,15 @@ export default function ClientsPage() {
         </div>
       </div>
 
+      {/* Loading State */}
+      {isLoading && (
+        <div className="flex items-center justify-center py-16 text-sm text-zinc-500 dark:text-zinc-400">
+          Loading clients...
+        </div>
+      )}
+
       {/* Main Container containing Action Bar and Content */}
-      <DashboardCard className="overflow-hidden">
+      {!isLoading && <DashboardCard className="overflow-hidden">
         {/* Action Bar */}
         <div className="flex flex-col gap-4 p-4 border-b border-zinc-200 dark:border-zinc-800 sm:flex-row sm:items-center sm:p-5">
           {/* Search */}
@@ -233,7 +329,7 @@ export default function ClientsPage() {
                               size="icon"
                               className="size-8 rounded-lg text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
                               title="Edit"
-                              onClick={() => alert(`Edit flow for client: ${client.name}`)}
+                              onClick={() => openEdit(client)}
                             >
                               <Edit className="size-4" />
                             </Button>
@@ -242,7 +338,7 @@ export default function ClientsPage() {
                               size="icon"
                               className="size-8 rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/30 dark:hover:text-rose-400"
                               title="Delete"
-                              onClick={() => handleDeleteClient(client.id, client.name)}
+                              onClick={() => setDeleteTarget({ id: client.id, name: client.name })}
                             >
                               <Trash2 className="size-4" />
                             </Button>
@@ -346,7 +442,7 @@ export default function ClientsPage() {
                           variant="outline"
                           size="sm"
                           className="h-8 rounded-lg text-xs font-semibold px-3"
-                          onClick={() => alert(`Edit flow for client: ${client.name}`)}
+                          onClick={() => openEdit(client)}
                         >
                           Edit
                         </Button>
@@ -354,7 +450,7 @@ export default function ClientsPage() {
                           variant="outline"
                           size="sm"
                           className="h-8 rounded-lg text-xs font-semibold px-2.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/20"
-                          onClick={() => handleDeleteClient(client.id, client.name)}
+                          onClick={() => setDeleteTarget({ id: client.id, name: client.name })}
                           title="Delete"
                         >
                           <Trash2 className="size-3.5" />
@@ -371,7 +467,110 @@ export default function ClientsPage() {
             )}
           </div>
         )}
-      </DashboardCard>
+      </DashboardCard>}
+
+      {/* ── Toast ── */}
+      {toast && (
+        <div className={`fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-xl border px-4 py-3 shadow-lg text-sm font-medium animate-in slide-in-from-bottom-2 duration-200 ${
+          toast.type === "success"
+            ? "border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900/50 dark:bg-emerald-950/80 dark:text-emerald-300"
+            : "border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900/50 dark:bg-rose-950/80 dark:text-rose-300"
+        }`}>
+          {toast.type === "success" ? <CheckCircle2 className="size-4 shrink-0" /> : <AlertCircle className="size-4 shrink-0" />}
+          {toast.msg}
+        </div>
+      )}
+
+      {/* ── Delete Confirm Modal ── */}
+      {deleteTarget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="w-full max-w-sm rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-950 space-y-4">
+            <div className="flex items-start justify-between">
+              <div className="space-y-1">
+                <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100">Delete Client</h2>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                  Are you sure you want to delete <span className="font-semibold text-zinc-900 dark:text-zinc-100">{deleteTarget.name}</span>? This action cannot be undone.
+                </p>
+              </div>
+              <button onClick={() => setDeleteTarget(null)} className="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 ml-4">
+                <X className="size-4" />
+              </button>
+            </div>
+            <div className="flex justify-end gap-3">
+              <Button variant="outline" className="h-9 rounded-lg text-sm" onClick={() => setDeleteTarget(null)} disabled={deleteLoading}>Cancel</Button>
+              <Button className="h-9 rounded-lg text-sm bg-rose-600 hover:bg-rose-700 text-white" onClick={handleDeleteClient} disabled={deleteLoading}>
+                {deleteLoading ? "Deleting..." : "Delete"}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Edit Modal ── */}
+      {editTarget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="w-full max-w-lg rounded-2xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-950 overflow-hidden">
+            <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 px-6 py-4">
+              <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100">Edit Client</h2>
+              <button onClick={() => setEditTarget(null)} className="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"><X className="size-4" /></button>
+            </div>
+            <div className="p-6 space-y-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {([
+                  { key: "name", label: "Full Name" },
+                  { key: "company", label: "Company" },
+                  { key: "email", label: "Email" },
+                  { key: "phone", label: "Phone" },
+                ] as const).map(({ key, label }) => (
+                  <label key={key} className="flex flex-col gap-1.5">
+                    <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{label}</span>
+                    <Input
+                      value={editForm[key]}
+                      onChange={(e) => setEditForm((p) => ({ ...p, [key]: e.target.value }))}
+                      className="h-10 rounded-lg border-zinc-200 bg-zinc-50 text-sm dark:border-zinc-800 dark:bg-zinc-900"
+                    />
+                  </label>
+                ))}
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Business Type</span>
+                  <select
+                    value={editForm.businessType}
+                    onChange={(e) => setEditForm((p) => ({ ...p, businessType: e.target.value }))}
+                    className="h-10 rounded-lg border border-zinc-200 bg-zinc-50 px-3 text-sm outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
+                  >
+                    {BUSINESS_TYPES.map((t) => <option key={t}>{t}</option>)}
+                  </select>
+                </label>
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Status</span>
+                  <select
+                    value={editForm.status}
+                    onChange={(e) => setEditForm((p) => ({ ...p, status: e.target.value }))}
+                    className="h-10 rounded-lg border border-zinc-200 bg-zinc-50 px-3 text-sm outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 capitalize"
+                  >
+                    {STATUS_OPTIONS.map((s) => <option key={s} className="capitalize">{s}</option>)}
+                  </select>
+                </label>
+              </div>
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Notes</span>
+                <textarea
+                  value={editForm.notes}
+                  onChange={(e) => setEditForm((p) => ({ ...p, notes: e.target.value }))}
+                  rows={3}
+                  className="rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-sm outline-none resize-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
+                />
+              </label>
+            </div>
+            <div className="flex justify-end gap-3 border-t border-zinc-100 dark:border-zinc-800 px-6 py-4">
+              <Button variant="outline" className="h-9 rounded-lg text-sm" onClick={() => setEditTarget(null)} disabled={editLoading}>Cancel</Button>
+              <Button className="h-9 rounded-lg text-sm" onClick={handleSaveEdit} disabled={editLoading}>
+                {editLoading ? "Saving..." : "Save Changes"}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -43,7 +43,7 @@ export function formatCompactCurrency(
   }).format(amount);
 }
 
-export const CLIENT_CURRENCY = "LYD";
+export const CLIENT_CURRENCY = "USD";
 
 export function formatLyd(amount: number, options?: { compact?: boolean }) {
   return new Intl.NumberFormat("en-US", {

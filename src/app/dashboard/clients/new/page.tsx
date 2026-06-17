@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Save, X, CheckCircle2 } from "lucide-react";
+import { Save, X, CheckCircle2, Copy, Check, Loader2 } from "lucide-react";
 
 import { DashboardCard } from "@/components/dashboard/dashboard-card";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -39,7 +39,9 @@ const textareaClass =
 export default function AddClientPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [credentials, setCredentials] = useState<{ email: string; password: string } | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -51,6 +53,18 @@ export default function AddClientPage() {
     notes: "",
   });
 
+  const [unlinkedPages, setUnlinkedPages] = useState<{ id: string; name: string; externalPageId: string | null }[]>([]);
+  const [pagesLoading, setPagesLoading]     = useState(false);
+  const [selectedPageId, setSelectedPageId] = useState("");
+
+  useEffect(() => {
+    setPagesLoading(true);
+    fetch("/api/social-pages/unlinked")
+      .then((r) => r.json())
+      .then((d) => { if (d.success) setUnlinkedPages(d.data); })
+      .finally(() => setPagesLoading(false));
+  }, []);
+
   const handleChange = (
     key: keyof typeof form,
     value: string
@@ -60,21 +74,34 @@ export default function AddClientPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.company || !form.email) {
-      alert("Please fill in all required fields (Name, Company, and Email).");
-      return;
-    }
+    setError(null);
 
     setLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setLoading(false);
-    setSuccess(true);
+    try {
+      const res = await fetch("/api/clients", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          socialPageId: selectedPageId || undefined,
+        }),
+      });
+      const data = await res.json();
 
-    // Redirect after showing success banner
-    setTimeout(() => {
-      router.push("/dashboard/clients");
-    }, 2000);
+      if (!res.ok) {
+        setError(data.message ?? "Failed to create client.");
+        return;
+      }
+
+      setCredentials({
+        email: form.email,
+        password: data.data.temporaryPassword,
+      });
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -98,12 +125,52 @@ export default function AddClientPage() {
         />
       </div>
 
-      {success && (
-        <div className="flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-800 dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-400 animate-in fade-in zoom-in duration-200">
-          <CheckCircle2 className="size-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
-          <div className="text-sm font-medium">
-            Client account created successfully! Redirecting...
+      {credentials && (
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5 space-y-4 dark:border-emerald-900/50 dark:bg-emerald-950/30 animate-in fade-in zoom-in duration-200">
+          <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+            <CheckCircle2 className="size-5 shrink-0" />
+            <span className="text-sm font-semibold">Client Created Successfully</span>
           </div>
+
+          <div className="rounded-lg border border-emerald-200 bg-white dark:border-emerald-900/40 dark:bg-zinc-900 p-4 space-y-3">
+            <div className="space-y-0.5">
+              <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Email</p>
+              <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{credentials.email}</p>
+            </div>
+            <div className="space-y-0.5">
+              <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Temporary Password</p>
+              <p className="text-sm font-mono font-bold text-zinc-900 dark:text-zinc-100 tracking-wide">{credentials.password}</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <Button
+              type="button"
+              variant="outline"
+              className="h-9 rounded-lg text-sm"
+              render={<Link href="/dashboard/clients" />}
+            >
+              Go to Clients
+            </Button>
+            <Button
+              type="button"
+              className="h-9 rounded-lg text-sm bg-emerald-600 hover:bg-emerald-700 text-white"
+              onClick={() => {
+                navigator.clipboard.writeText(`Email: ${credentials.email}\nPassword: ${credentials.password}`);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+            >
+              {copied ? <Check className="size-4 mr-1.5" /> : <Copy className="size-4 mr-1.5" />}
+              {copied ? "Copied!" : "Copy Credentials"}
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {error && (
+        <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-900/50 dark:bg-rose-950/30 dark:text-rose-400">
+          {error}
         </div>
       )}
 
@@ -194,11 +261,41 @@ export default function AddClientPage() {
               </Field>
             </div>
 
-            {/* Notes Section - Full Width */}
+            {/* Facebook Page — above Notes */}
+            <div className="pt-2">
+              <Field label="Facebook Page">
+                {pagesLoading ? (
+                  <div className="flex items-center gap-2 h-10 text-xs text-zinc-400">
+                    <Loader2 className="size-3.5 animate-spin" />
+                    Loading pages...
+                  </div>
+                ) : (
+                  <select
+                    value={selectedPageId}
+                    onChange={(e) => setSelectedPageId(e.target.value)}
+                    className={selectClass}
+                  >
+                    <option value="">-- None --</option>
+                    {unlinkedPages.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.name}{p.externalPageId ? ` (${p.externalPageId})` : ""}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </Field>
+              {unlinkedPages.length === 0 && !pagesLoading && (
+                <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                  No unlinked Facebook pages found. Seed them first via the dev endpoint.
+                </p>
+              )}
+            </div>
+
+            {/* Notes Section */}
             <div className="pt-2">
               <Field label="Notes">
                 <textarea
-                  placeholder="Prefers Meta Ads campaigns. Monthly budget is around 5,000 LYD."
+                  placeholder="Prefers Meta Ads campaigns. Monthly budget is around 5,000 USD."
                   value={form.notes}
                   onChange={(e) => handleChange("notes", e.target.value)}
                   className={textareaClass}
@@ -213,7 +310,7 @@ export default function AddClientPage() {
               type="button"
               variant="outline"
               render={<Link href="/dashboard/clients" />}
-              disabled={loading || success}
+              disabled={loading || !!credentials}
               className="h-10 rounded-lg text-sm font-semibold w-full sm:w-auto"
             >
               <X className="size-4 mr-1.5" />
@@ -221,7 +318,7 @@ export default function AddClientPage() {
             </Button>
             <Button
               type="submit"
-              disabled={loading || success}
+              disabled={loading || !!credentials}
               className="h-10 rounded-lg text-sm font-semibold w-full sm:w-auto bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:opacity-90 shadow-sm"
             >
               <Save className="size-4 mr-1.5" />

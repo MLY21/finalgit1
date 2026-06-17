@@ -6,6 +6,20 @@ export type CampaignStatus = "active" | "paused" | "completed";
 
 export type AdPlatform = "meta" | "tiktok" | "google";
 
+// Display labels for platforms
+export const AdPlatformLabels: Record<AdPlatform, string> = {
+  meta: "Meta Ads",
+  tiktok: "TikTok Ads",
+  google: "Google Ads",
+};
+
+// Display labels for status
+export const CampaignStatusLabels: Record<CampaignStatus, string> = {
+  active: "Active",
+  paused: "Paused",
+  completed: "Completed",
+};
+
 export type StatKey =
   | "totalClients"
   | "activeCampaigns"
@@ -21,7 +35,7 @@ export interface StatCardData {
 
 export interface Campaign {
   id: string;
-  nameKey: string;
+  name: string;
   platform: AdPlatform;
   budget: number;
   status: CampaignStatus;

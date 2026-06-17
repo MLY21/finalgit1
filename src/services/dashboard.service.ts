@@ -1,94 +1,104 @@
+import { prisma } from "@/lib/prisma";
+import { getAuthUser } from "@/lib/auth";
 import type { DashboardOverview } from "@/types";
 
-const mockOverview: DashboardOverview = {
+const emptyOverview: DashboardOverview = {
   stats: [
-    { key: "totalClients", value: 48, change: 12.5, trend: "up" },
-    { key: "activeCampaigns", value: 24, change: 8.2, trend: "up" },
-    { key: "totalLeads", value: 1247, change: 15.3, trend: "up" },
-    { key: "totalExpenses", value: 96200, change: -3.1, trend: "down" },
+    { key: "totalClients", value: 0, change: 0, trend: "up" },
+    { key: "activeCampaigns", value: 0, change: 0, trend: "up" },
+    { key: "totalLeads", value: 0, change: 0, trend: "up" },
+    { key: "totalExpenses", value: 0, change: 0, trend: "up" },
   ],
-  campaignPerformance: [
-    { name: "Jan", impressions: 4200, clicks: 2400, conversions: 800 },
-    { name: "Feb", impressions: 3800, clicks: 2210, conversions: 720 },
-    { name: "Mar", impressions: 5100, clicks: 2900, conversions: 980 },
-    { name: "Apr", impressions: 4700, clicks: 2780, conversions: 910 },
-    { name: "May", impressions: 5900, clicks: 3200, conversions: 1100 },
-    { name: "Jun", impressions: 6200, clicks: 3490, conversions: 1240 },
-    { name: "Jul", impressions: 6800, clicks: 3800, conversions: 1380 },
-  ],
-  monthlyExpenses: [
-    { name: "Jan", expenses: 12000 },
-    { name: "Feb", expenses: 10500 },
-    { name: "Mar", expenses: 15000 },
-    { name: "Apr", expenses: 13800 },
-    { name: "May", expenses: 17500 },
-    { name: "Jun", expenses: 19200 },
-    { name: "Jul", expenses: 21000 },
-  ],
-  recentCampaigns: [
-    {
-      id: "1",
-      nameKey: "summerBrandAwareness",
-      platform: "meta",
-      budget: 15000,
-      status: "active",
-      performance: 87,
-      date: "2026-05-18",
-    },
-    {
-      id: "2",
-      nameKey: "productLaunchGenZ",
-      platform: "tiktok",
-      budget: 8500,
-      status: "active",
-      performance: 92,
-      date: "2026-05-15",
-    },
-    {
-      id: "3",
-      nameKey: "searchHighIntent",
-      platform: "google",
-      budget: 12000,
-      status: "paused",
-      performance: 64,
-      date: "2026-05-10",
-    },
-    {
-      id: "4",
-      nameKey: "retargetingCart",
-      platform: "meta",
-      budget: 6000,
-      status: "completed",
-      performance: 78,
-      date: "2026-05-01",
-    },
-    {
-      id: "5",
-      nameKey: "holidayPromo2025",
-      platform: "google",
-      budget: 22000,
-      status: "completed",
-      performance: 95,
-      date: "2026-04-28",
-    },
-    {
-      id: "6",
-      nameKey: "influencerCollab",
-      platform: "tiktok",
-      budget: 9500,
-      status: "paused",
-      performance: 71,
-      date: "2026-04-20",
-    },
-  ],
+  campaignPerformance: [],
+  monthlyExpenses: [],
+  recentCampaigns: [],
 };
 
 export async function getDashboardOverview(): Promise<DashboardOverview> {
-  // Replace with: return apiClient<DashboardOverview>("/dashboard/overview");
-  await simulateNetworkDelay();
-  return mockOverview;
-}
+  try {
+    const user = await getAuthUser();
+    if (!user) return emptyOverview;
 
-function simulateNetworkDelay() {
-  return new Promise((resolve) => setTimeout(resolve, 100));
+    const adminId = user.id;
+
+    const totalClients = await prisma.client.count({ where: { adminId } });
+
+    const allCampaigns = await prisma.campaign.findMany({
+      where: { socialPage: { client: { adminId } } },
+      include: { performancePoints: { orderBy: { date: "desc" } } },
+    });
+
+    const activeCampaigns = allCampaigns.filter((c) => c.status === "ACTIVE").length;
+    const allPts = allCampaigns.flatMap((c) => c.performancePoints);
+    const totalLeads = allPts.reduce((s, p) => s + p.messagesStarted, 0);
+    const totalSpend = allPts.reduce((s, p) => s + Number(p.spend), 0);
+
+    const today = new Date();
+
+    const campaignPerformance = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(today);
+      d.setDate(d.getDate() - (6 - i));
+      const dayStr = d.toISOString().split("T")[0];
+      const pts = allPts.filter((p) => p.date.toISOString().split("T")[0] === dayStr);
+      return {
+        name: d.toLocaleString("en", { month: "short", day: "numeric" }),
+        impressions: pts.reduce((s, p) => s + p.impressions, 0),
+        clicks: pts.reduce((s, p) => s + p.clicks, 0),
+        conversions: pts.reduce((s, p) => s + p.conversions, 0),
+      };
+    });
+
+    const monthlyExpenses = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(today.getFullYear(), today.getMonth() - (6 - i), 1);
+      const year = d.getFullYear();
+      const month = d.getMonth();
+      const pts = allPts.filter((p) => {
+        const pd = new Date(p.date);
+        return pd.getFullYear() === year && pd.getMonth() === month;
+      });
+      return {
+        name: d.toLocaleString("en", { month: "short" }),
+        expenses: pts.reduce((s, p) => s + Number(p.spend), 0),
+      };
+    });
+
+    const statusMap: Record<string, string> = { ACTIVE: "active", PAUSED: "paused", COMPLETED: "completed" };
+    const platformMap: Record<string, string> = { META: "meta", TIKTOK: "tiktok", GOOGLE: "google" };
+
+    const recent = allCampaigns
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice(0, 6);
+
+    const recentCampaigns = recent.map((c) => {
+      const pts = c.performancePoints;
+      const totalClicks = pts.reduce((s, p) => s + p.clicks, 0);
+      const totalImpressions = pts.reduce((s, p) => s + p.impressions, 0);
+      const performance = totalImpressions > 0
+        ? Math.min(Math.round((totalClicks / totalImpressions) * 1000), 100)
+        : 0;
+      return {
+        id: c.id,
+        name: c.name,
+        platform: (platformMap[c.platform] ?? "meta") as "meta" | "tiktok" | "google",
+        budget: Number(c.budget),
+        status: (statusMap[c.status] ?? "paused") as "active" | "paused" | "completed",
+        performance,
+        date: c.startDate.toISOString().split("T")[0],
+      };
+    });
+
+    return {
+      stats: [
+        { key: "totalClients", value: totalClients, change: 0, trend: "up" },
+        { key: "activeCampaigns", value: activeCampaigns, change: 0, trend: "up" },
+        { key: "totalLeads", value: totalLeads, change: 0, trend: "up" },
+        { key: "totalExpenses", value: Math.round(totalSpend), change: 0, trend: "up" },
+      ],
+      campaignPerformance,
+      monthlyExpenses,
+      recentCampaigns,
+    };
+  } catch {
+    return emptyOverview;
+  }
 }

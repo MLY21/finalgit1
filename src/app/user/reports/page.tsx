@@ -1,11 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Bar,
   BarChart,
   CartesianGrid,
-  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -13,6 +12,7 @@ import {
 } from "recharts";
 
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { Database } from "lucide-react";
 import { ClientCampaignTable } from "@/components/client/client-campaign-table";
 import { ClientPerformanceChart } from "@/components/client/client-performance-chart";
 import {
@@ -26,16 +26,11 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { SectionHeader } from "@/components/dashboard/section-header";
 import {
   getChartAxisTick,
-  getChartLegendProps,
   getChartTooltipProps,
 } from "@/lib/chart-config";
 import { useChartTheme } from "@/hooks/use-chart-theme";
-import { clientCampaigns } from "@/data/client-dashboard";
 import { formatLyd, formatNumber } from "@/lib/format";
 import { platformLabels } from "@/lib/platform-labels";
-import type { PerformancePoint } from "@/types/client";
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
 
 function SummaryCard({ label, value }: { label: string; value: string }) {
   return (
@@ -56,80 +51,71 @@ export default function UserReportsPage() {
     platform: "all",
     status: "all",
   });
+  const [campaigns, setCampaigns] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/user/campaigns")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setCampaigns(d.data);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const theme = useChartTheme();
   const tooltipProps = getChartTooltipProps(theme);
   const axisTick = getChartAxisTick(theme);
-  const legendProps = getChartLegendProps();
 
   const filtered = useMemo(
     () =>
-      clientCampaigns.filter(
-        (c) =>
+      campaigns.filter(
+        (c: any) =>
           (filters.platform === "all" || c.platform === filters.platform) &&
           (filters.status === "all" || c.status === filters.status)
       ),
-    [filters.platform, filters.status]
+    [filters.platform, filters.status, campaigns]
   );
 
   const summary = useMemo(() => {
     const totalViews = filtered.reduce((s, c) => s + c.views, 0);
     const totalClicks = filtered.reduce((s, c) => s + c.clicks, 0);
-    const totalLeads = filtered.reduce((s, c) => s + c.leads, 0);
-    const totalSpent = filtered.reduce((s, c) => s + c.spent, 0);
-    const totalRevenue = filtered.reduce((s, c) => s + c.revenue, 0);
-    return {
-      totalViews,
-      totalClicks,
-      totalLeads,
-      totalSpent,
-      totalRevenue,
-      netProfit: totalRevenue - totalSpent,
-    };
+    const totalMessages = filtered.reduce((s, c) => s + c.messages, 0);
+    const totalSpent = filtered.reduce((s, c) => s + c.spend, 0);
+    return { totalViews, totalClicks, totalMessages, totalSpent };
   }, [filtered]);
 
-  const performance = useMemo<PerformancePoint[]>(
-    () =>
-      MONTHS.map((name, index) => {
-        let views = 0;
-        let clicks = 0;
-        let leads = 0;
-        for (const c of filtered) {
-          const point = c.performanceSeries[index];
-          if (point) {
-            views += point.views;
-            clicks += point.clicks;
-            leads += point.leads;
-          }
-        }
-        return { name, views, clicks, leads };
-      }),
+  const performance = useMemo(
+    () => {
+      if (filtered.length === 0) return [];
+      const monthly = new Map<string, { views: number; clicks: number; leads: number }>();
+      // Since we don't have per-month breakdown in this simplified API, aggregate by campaign
+      for (const c of filtered) {
+        const key = c.startDate?.slice(0, 7) ?? "Unknown";
+        const existing = monthly.get(key) ?? { views: 0, clicks: 0, leads: 0 };
+        existing.views += c.views ?? 0;
+        existing.clicks += c.clicks ?? 0;
+        existing.leads += c.messages ?? 0;
+        monthly.set(key, existing);
+      }
+      return Array.from(monthly.entries()).map(([name, data]) => ({ name, ...data }));
+    },
     [filtered]
   );
 
-  const revenueVsExpenses = useMemo(
-    () =>
-      MONTHS.map((name, index) => ({
-        name,
-        revenue: Math.round((summary.totalRevenue / 7) * (0.7 + index * 0.09)),
-        expenses: Math.round((summary.totalSpent / 7) * (0.8 + index * 0.06)),
-      })),
-    [summary]
-  );
-
-  const leadsByPlatform = useMemo(() => {
+  const messagesByPlatform = useMemo(() => {
     const byPlatform: Record<string, number> = {};
     for (const c of filtered) {
-      byPlatform[c.platform] = (byPlatform[c.platform] ?? 0) + c.leads;
+      byPlatform[c.platform] = (byPlatform[c.platform] ?? 0) + (c.messages ?? 0);
     }
-    return Object.entries(byPlatform).map(([platform, leads]) => ({
-      name: platformLabels[platform as keyof typeof platformLabels] ?? platform,
-      leads,
+    return Object.entries(byPlatform).map(([platform, messages]) => ({
+      name: platformLabels[(platform ?? "").toUpperCase() as keyof typeof platformLabels] ?? platform,
+      messages,
     }));
   }, [filtered]);
 
   const bestPerforming = useMemo(
-    () => [...filtered].sort((a, b) => b.performance - a.performance).slice(0, 5),
+    () => [...filtered].sort((a, b) => (b.clicks / Math.max(b.views, 1)) - (a.clicks / Math.max(a.views, 1))).slice(0, 5),
     [filtered]
   );
 
@@ -138,84 +124,69 @@ export default function UserReportsPage() {
       <Breadcrumbs />
       <PageHeader
         title="Reports"
-        description="Analyze performance, revenue, and leads across your campaigns."
+        description="Analyze performance, spend, and leads across your campaigns."
       />
 
       <ClientReportsFilter value={filters} onChange={setFilters} />
 
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
-        <SummaryCard label="Total Views" value={formatNumber(summary.totalViews, { compact: true })} />
-        <SummaryCard label="Total Clicks" value={formatNumber(summary.totalClicks, { compact: true })} />
-        <SummaryCard label="Total Leads" value={formatNumber(summary.totalLeads, { compact: true })} />
-        <SummaryCard label="Total Spent" value={formatLyd(summary.totalSpent, { compact: true })} />
-        <SummaryCard label="Total Revenue" value={formatLyd(summary.totalRevenue, { compact: true })} />
-        <SummaryCard label="Net Profit" value={formatLyd(summary.netProfit, { compact: true })} />
-      </div>
+      {loading ? (
+        <DashboardCard className="flex min-h-[200px] items-center justify-center p-8">
+          <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Loading reports...</p>
+        </DashboardCard>
+      ) : campaigns.length === 0 ? (
+        <DashboardCard className="flex flex-col items-center justify-center gap-4 py-20">
+          <Database className="size-12 text-zinc-300 dark:text-zinc-600" />
+          <div className="text-center">
+            <p className="text-lg font-semibold text-zinc-700 dark:text-zinc-300">No campaign data available yet.</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Your campaigns will appear here once they are imported.</p>
+          </div>
+        </DashboardCard>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <SummaryCard label="Total Views" value={formatNumber(summary.totalViews, { compact: true })} />
+            <SummaryCard label="Total Clicks" value={formatNumber(summary.totalClicks, { compact: true })} />
+            <SummaryCard label="Total Messages" value={formatNumber(summary.totalMessages, { compact: true })} />
+            <SummaryCard label="Total Spent" value={formatLyd(summary.totalSpent, { compact: true })} />
+          </div>
 
-      <ClientPerformanceChart
-        data={performance}
-        title="Campaign Performance"
-        description="Views, clicks, and leads over time"
-      />
+          <ClientPerformanceChart
+            data={performance}
+            title="Campaign Performance"
+            description="Views, clicks, and messages over time"
+          />
 
-      <div className="grid gap-6 xl:grid-cols-2">
-        <ChartCard
-          title="Revenue vs Expenses"
-          description="Monthly revenue compared to spend"
-        >
-          <ChartContainer>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={revenueVsExpenses} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke={theme.grid} vertical={false} />
-                <XAxis dataKey="name" tick={axisTick} axisLine={false} tickLine={false} />
-                <YAxis
-                  tick={axisTick}
-                  axisLine={false}
-                  tickLine={false}
-                  tickFormatter={(value) => formatLyd(Number(value), { compact: true })}
-                />
-                <Tooltip
-                  {...tooltipProps}
-                  formatter={(value, name) => [formatLyd(Number(value ?? 0)), String(name)]}
-                />
-                <Legend {...legendProps} />
-                <Bar dataKey="revenue" name="Revenue" fill={theme.line.conversions} radius={[6, 6, 0, 0]} maxBarSize={28} />
-                <Bar dataKey="expenses" name="Expenses" fill={theme.line.clicks} radius={[6, 6, 0, 0]} maxBarSize={28} />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartContainer>
-        </ChartCard>
+          <ChartCard
+            title="Messages by Platform"
+            description="Total messages started per platform"
+          >
+            <ChartContainer>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={messagesByPlatform} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke={theme.grid} vertical={false} />
+                  <XAxis dataKey="name" tick={axisTick} axisLine={false} tickLine={false} />
+                  <YAxis tick={axisTick} axisLine={false} tickLine={false} />
+                  <Tooltip {...tooltipProps} />
+                  <Bar dataKey="messages" name="Messages" fill={theme.barFill} radius={[6, 6, 0, 0]} maxBarSize={48} />
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </ChartCard>
 
-        <ChartCard
-          title="Leads by Platform"
-          description="Total leads generated per platform"
-        >
-          <ChartContainer>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={leadsByPlatform} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke={theme.grid} vertical={false} />
-                <XAxis dataKey="name" tick={axisTick} axisLine={false} tickLine={false} />
-                <YAxis tick={axisTick} axisLine={false} tickLine={false} />
-                <Tooltip {...tooltipProps} />
-                <Bar dataKey="leads" name="Leads" fill={theme.barFill} radius={[6, 6, 0, 0]} maxBarSize={48} />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartContainer>
-        </ChartCard>
-      </div>
-
-      <div className="space-y-3">
-        <SectionHeader title="Best Performing Campaigns" />
-        {bestPerforming.length > 0 ? (
-          <ClientCampaignTable campaigns={bestPerforming} variant="recent" />
-        ) : (
-          <DashboardCard className="flex min-h-[160px] items-center justify-center p-8">
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              No campaigns match your filters.
-            </p>
-          </DashboardCard>
-        )}
-      </div>
+          <div className="space-y-3">
+            <SectionHeader title="Best Performing Campaigns" />
+            {bestPerforming.length > 0 ? (
+              <ClientCampaignTable campaigns={bestPerforming} variant="recent" />
+            ) : (
+              <DashboardCard className="flex min-h-[160px] items-center justify-center p-8">
+                <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+                  No campaigns match your filters.
+                </p>
+              </DashboardCard>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

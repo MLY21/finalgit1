@@ -1,0 +1,286 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  CLIENT
+}
+
+enum ClientStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  SUSPENDED
+}
+
+enum CampaignStatus {
+  ACTIVE
+  PAUSED
+  COMPLETED
+}
+
+enum AdPlatform {
+  META
+  TIKTOK
+  GOOGLE
+}
+
+enum BusinessType {
+  E_COMMERCE
+  RESTAURANT
+  CLINIC
+  EDUCATION
+  REAL_ESTATE
+  OTHER
+}
+
+enum MarketingGoal {
+  BRAND_AWARENESS
+  TRAFFIC
+  ENGAGEMENT
+  LEADS
+  SALES
+}
+
+enum AssignmentStatus {
+  UNASSIGNED
+  MANUAL_ASSIGNED
+  AUTO_ASSIGNED
+}
+
+enum ActivityType {
+  CLIENT_CREATED
+  CLIENT_UPDATED
+  CAMPAIGN_CREATED
+  CAMPAIGN_UPDATED
+  CAMPAIGN_PAUSED
+  CAMPAIGN_COMPLETED
+  NOTE_ADDED
+}
+
+// Models
+model User {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  password       String
+  role                UserRole @default(CLIENT)
+  avatarInitials      String?
+  mustChangePassword  Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Relations
+  // For CLIENT role users: linked to their specific client record
+  clientId       String?   @unique
+  client         Client?   @relation("ClientLogin", fields: [clientId], references: [id], onDelete: Cascade)
+  // For ADMIN role users: can manage multiple clients
+  managedClients Client[]  @relation("AdminOwnership")
+  sessions       Session[]
+
+  @@index([email])
+  @@index([clientId])
+}
+
+model Client {
+  id             String       @id @default(cuid())
+  name           String
+  email          String
+  phone          String
+  company        String
+  businessType   BusinessType
+  status         ClientStatus @default(PENDING)
+  notes          String?      @db.Text
+  avatarInitials String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  // Relations
+  // One-to-one: Each client can have one user account for login
+  user         User?         @relation("ClientLogin")
+  // Many-to-one: Each client belongs to one admin
+  adminId      String?
+  admin        User?         @relation("AdminOwnership", fields: [adminId], references: [id], onDelete: SetNull)
+  // One-to-many: Each client can have multiple social pages
+  socialPages  SocialPage[]
+  campaigns    Campaign[]    @relation("ClientCampaigns")
+  activityLogs ActivityLog[]
+
+  @@index([email])
+  @@index([status])
+  @@index([adminId])
+}
+
+model SocialPage {
+  id             String     @id @default(cuid())
+  clientId       String?    // nullable — page can exist without a client
+  name           String
+  platform       AdPlatform
+  externalPageId String?    @unique // unique for upsert by FB page ID
+  url            String?
+  isActive       Boolean    @default(true)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  // Relations
+  client           Client?           @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  campaigns        Campaign[]
+  importCandidates ImportCandidate[]
+
+  @@index([clientId])
+  @@index([platform])
+  @@index([isActive])
+}
+
+model Campaign {
+  id                  String         @id @default(cuid())
+  name                String
+  pageId              String?
+  platform            AdPlatform
+  status              CampaignStatus @default(PAUSED)
+  marketingGoal       MarketingGoal
+  budget              Decimal        @db.Decimal(10, 2)
+  startDate           DateTime
+  endDate             DateTime
+  description         String?        @db.Text
+  externalCampaignId  String?
+  externalAdAccountId String?
+  lastSync            DateTime?
+  clientId            String?
+  assignmentStatus    AssignmentStatus @default(UNASSIGNED)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  // Relations
+  socialPage        SocialPage?           @relation(fields: [pageId], references: [id], onDelete: SetNull)
+  client            Client?               @relation("ClientCampaigns", fields: [clientId], references: [id], onDelete: SetNull)
+  performancePoints CampaignPerformance[]
+  notes             CampaignNote[]
+
+  @@index([pageId])
+  @@index([clientId])
+  @@index([status])
+  @@index([platform])
+  @@index([assignmentStatus])
+  @@index([startDate, endDate])
+}
+
+model CampaignPerformance {
+  id         String   @id @default(cuid())
+  campaignId String
+  date       DateTime
+
+  // Core metrics
+  impressions  Int     @default(0)
+  reach        Int     @default(0)
+  clicks       Int     @default(0)
+  uniqueClicks Int     @default(0)
+  spend        Decimal @default(0) @db.Decimal(10, 2)
+
+  // Rate metrics (stored directly from Facebook API)
+  cpc       Decimal? @db.Decimal(10, 4)
+  ctr       Decimal? @db.Decimal(10, 4)
+  frequency Decimal? @db.Decimal(10, 4)
+
+  // Action-based metrics (extracted from Facebook actions array)
+  linkClicks      Int @default(0)
+  comments        Int @default(0)
+  reactions       Int @default(0)
+  videoViews      Int @default(0)
+  engagements     Int @default(0)
+  messagesStarted Int @default(0)
+
+  // Legacy fields (kept for backward compatibility)
+  leads       Int @default(0)
+  conversions Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, date])
+  @@index([campaignId])
+  @@index([date])
+}
+
+model CampaignNote {
+  id         String   @id @default(cuid())
+  campaignId String
+  author     String
+  message    String   @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId])
+  @@index([createdAt])
+}
+
+model ActivityLog {
+  id          String       @id @default(cuid())
+  clientId    String
+  type        ActivityType
+  description String       @db.Text
+  createdAt   DateTime     @default(now())
+
+  // Relations
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+  @@index([createdAt])
+}
+
+model ImportCandidate {
+  id                  String   @id @default(cuid())
+  externalCampaignId  String   @unique
+  externalAdAccountId String?
+  name                String   @db.Text
+  fbStatus            String
+  fbObjective         String
+  dailyBudget         String?
+  lifetimeBudget      String?
+  startTime           String?
+  stopTime            String?
+  createdTime         String?
+  fbPageId            String?  // raw FB page_id from adset promoted_object
+  socialPageId        String?  // matched SocialPage.id (null if no match)
+  insightsJson        Json?    // raw insights blob for later use
+  fetchedAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Relations
+  socialPage SocialPage? @relation(fields: [socialPageId], references: [id], onDelete: SetNull)
+
+  @@index([socialPageId])
+  @@index([fetchedAt])
+}
+
+// NextAuth Session Model
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([sessionToken])
+  @@index([userId])
+}

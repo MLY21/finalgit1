@@ -7,11 +7,13 @@ import { formatLyd } from "@/lib/format";
 import type { BudgetUsage } from "@/types/client";
 
 interface ClientBudgetChartProps {
-  data: BudgetUsage;
+  data: any;
 }
 
 export function ClientBudgetChart({ data }: ClientBudgetChartProps) {
-  const { totalBudget, totalSpent, remainingBudget } = data;
+  const totalBudget = data.totalBudget ?? 0;
+  const totalSpent = data.totalSpent ?? data.totalSpend ?? 0;
+  const remainingBudget = data.remainingBudget ?? data.remainingBudget ?? (totalBudget - totalSpent);
   const spentPercent = totalBudget > 0 ? (totalSpent / totalBudget) * 100 : 0;
 
   const rows = [

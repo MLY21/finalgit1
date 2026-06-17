@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Home, LogOut } from "lucide-react";
 
 import { NavLink } from "@/components/layout/nav-link";
@@ -19,12 +18,10 @@ export function ClientSidebarNav({
   iconOnly = false,
   onToggle,
 }: ClientSidebarNavProps) {
-  const router = useRouter();
-
-  const handleLogout = () => {
+  const handleLogout = async () => {
     onNavigate?.();
-    // Placeholder for future JWT/session sign-out.
-    router.push("/");
+    await fetch("/api/auth/logout", { method: "POST" });
+    window.location.href = "/login";
   };
 
   return (

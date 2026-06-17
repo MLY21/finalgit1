@@ -12,6 +12,9 @@ export interface CampaignDetails {
   clicks: number;
   views: number;
   conversions: number;
+  ctr: number;
+  cpl: number;
+  conversionRate: number;
   startDate: string;
   endDate: string;
   description: string;
@@ -83,6 +86,9 @@ export const mockCampaigns: CampaignDetails[] = [
     clicks: 1240,
     views: 32000,
     conversions: 78,
+    ctr: 3.88,
+    cpl: 30.77,
+    conversionRate: 6.29,
     startDate: "2025-06-01",
     endDate: "2025-08-31",
     description: "Meta Ads campaign maximizing conversions and traffic for Tripoli Tech Shop's summer collection.",
@@ -120,6 +126,9 @@ export const mockCampaigns: CampaignDetails[] = [
     clicks: 780,
     views: 12000,
     conversions: 42,
+    ctr: 6.5,
+    cpl: 32.98,
+    conversionRate: 5.38,
     startDate: "2025-05-15",
     endDate: "2025-07-15",
     description: "Google Search Ads and Clinic Landing Page lead generation targeting medical inquiries in Tripoli.",
@@ -155,6 +164,9 @@ export const mockCampaigns: CampaignDetails[] = [
     clicks: 1850,
     views: 65000,
     conversions: 18,
+    ctr: 2.85,
+    cpl: 156.25,
+    conversionRate: 0.97,
     startDate: "2025-04-01",
     endDate: "2025-05-01",
     description: "Highly engaging TikTok short video ads showcasing the Benghazi cafe cozy environment and special recipes.",
@@ -190,6 +202,9 @@ export const mockCampaigns: CampaignDetails[] = [
     clicks: 3400,
     views: 85000,
     conversions: 15,
+    ctr: 4.0,
+    cpl: 119.05,
+    conversionRate: 0.44,
     startDate: "2025-02-01",
     endDate: "2025-04-30",
     description: "Premium Meta Ads lead form and high-quality photo listings targeting luxury villa buyers in Tripoli outskirts.",

@@ -19,10 +19,8 @@ import {
   getChartTooltipProps,
 } from "@/lib/chart-config";
 import { useChartTheme } from "@/hooks/use-chart-theme";
-import type { PerformancePoint } from "@/types/client";
-
 interface ClientPerformanceChartProps {
-  data: PerformancePoint[];
+  data: any[];
   title?: string;
   description?: string;
 }
